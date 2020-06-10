@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>Import iCal</h1>
+
+    <form action="{% url 'cal:ical' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ form.non_field_errors }}</p>
+        <p>{{ form.icsfile.label_tag }} {{ form.icsfile.help_text }}</p>
+        <p>
+            {{ form.icsfile.errors }}
+            {{ form.icsfile }}
+        </p>
+        
+        <div class="form-group">
+            <label for="category">Calendar type:</label>
+            <select name="category" class="form-control">
+                <option value="1">School</option>
+                <option value="2">Grade</option>
+            </select><br>
+        </div>
+        <div class="form-group">
+            <input type="file" name="icsfile" class="form-control" />
+        </div>
+        <div class="form-group">        
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+    </form>
+
+    {% for event in events %}
+        {{ event.dtstart }} - {{ event.dtend }}<br>
+        {{ event.summary }}<br>
+        {{ event.description }}<br>
+        {{ event.url }}<br>
+        <br><br>
+    {% endfor %}
+
+{% endblock content %}

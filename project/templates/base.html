@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cal/css/styles.css' %}">
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300" rel="stylesheet" type="text/css">
+
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+
+    <title>Qlma</title>
+
+</head>
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-green fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="{% url 'news' %}"><img src="{% static 'qlma-logo.png' %}" class="logo" /></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            
+            <div class="navbar-nav mr-auto">
+              <!--
+              <a class="nav-item nav-link" href="{% url 'news' %}"><i class="fa fa-home" aria-hidden="true"></i>News</a>
+              <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
+              -->
+            </div>
+            
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="{% url 'staff' %}"><i class="fa fa-cog fa-inverse"></i>Staff</a>
+              <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-user"></i>{{ user.get_username }}</a>
+              <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fa fa-key"></i>Logout</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% block content %}{% endblock %}
+        </div>
+        <div class="col-md-4">
+          <div class="content-section">
+            <h3>Quick links</h3>
+            <p class='text-muted'>What are you looking for?
+              <ul class="list-group quicklinks">
+                <li class="list-group-item list-group-item-light"><a class="nav-item nav-link" href="{% url 'news' %}"><i class="fa fa-home" aria-hidden="true"></i>News</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-item nav-link" href="{% url 'messaging:messaging' %}"><i class="fa fa-envelope-o" aria-hidden="true"></i>Messages</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-item nav-link" href="{% url 'timetable' %}"><i class="fa fa-list-alt" aria-hidden="true"></i>Timetable</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-item nav-link" href="{% url 'cal:calendar' %}"><i class="fa fa-calendar" aria-hidden="true"></i>Calendar</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-item nav-link" href="{% url 'groups' %}"><i class="fa fa-users" aria-hidden="true"></i>Groups</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-item nav-link" href="{% url 'polls:index' %}"><i class="fa fa-thumbs-up" aria-hidden="true"></i>Polls</a></li>
+                <li class="list-group-item list-group-item-light"><a class="nav-item nav-link" href="{% url 'help' %}"><i class="fa fa-info-circle" aria-hidden="true"></i>Help</a></li>
+              </ul>
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="application/javascript">
+      $(document).ready(function () {
+        // Hide multiselect field
+        $('#div_id_recipients').hide();
+        // Remove all values from multiselect field
+        $('#id_recipients').children().remove();
+        // Init suggestive search and retrieve list of items as JSON using search function
+        $("#suggestiveSearch").autocomplete({
+          source: "{% url 'messaging:search' %}",
+          minLength: 1,
+          delay: 200,
+          autoFocus: true,
+          select: function (event, ui) {
+            // Show the user what options are selected
+            $('#recipients_list').append('<span class="email-ids" id="' + ui.item.id + '">' + ui.item.label + '<span class="cancel-email">x</span></span>');
+            // Add selected option to multiselect field
+            $('#id_recipients').append('<option value="' + ui.item.id + '" selected>' + ui.item.label + '</option>');
+          },
+          close: function(event, ui)  {
+            // Close event fires when selection options closes
+            $('#suggestiveSearch')[0].value = ""; // Clear the input field 
+          }
+        });
+      });
+      // Remove selected recipient
+      $(document).on('click','.cancel-email',function(){
+        // Retrieve id of selected item
+        selected_to_cancel = $(this).parent().attr('id');
+        // Remove selected item from multiselect options
+        $("#id_recipients option[value='" + selected_to_cancel + "']").remove();
+        // Remove selected item from recipients list
+        $(this).parent().remove();
+      });
+    </script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+</body>
+</html>

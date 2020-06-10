@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Event
+{% endblock %}
+
+{% block content %}
+<div class="clearfix">
+  <a class="btn btn-info left" href="{% url 'cal:calendar' %}">Calendar</a>
+</div>
+
+{% if event %}
+  <h1>{{ event.title }}</h1>
+  <p>Start: {{ start_time }}</p>
+  <p>End: {{ end_time }}</p>
+  <p>Url: {{ event.url }}</p>
+  <p>{{ event.description }}</p>
+  
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    
+    <div class="col-lg-12">
+        <a href="{% url 'post-create' %}">
+            <div class="submenu">
+                <h2><i class="fa fa-file-text"></i></h2>
+                Post news
+                <span></span>
+            </div>
+        </a>
+        <a href="{% url 'messaging:message-create' %}">
+                <div class="submenu">
+                    <h2><i class="fa fa-file-o"></i></h2>
+                    Send message
+                </div>
+            </a>
+    </div>
+
+{% endblock content %}
