@@ -1,0 +1,647 @@
+[
+   {
+      "model":"auth.user",
+      "pk":2,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
+         "last_login":null,
+         "is_superuser":true,
+         "username":"tester2",
+         "first_name":"Gracie",
+         "last_name":"Armstrong",
+         "email":"tester2@example.com",
+         "is_staff":true,
+         "is_active":true,
+         "date_joined":"2020-05-26T21:35:29.320Z",
+         "groups":[
+            4
+         ],
+         "user_permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.user",
+      "pk":3,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
+         "last_login":"2020-05-28T13:04:39.064Z",
+         "is_superuser":false,
+         "username":"tester3",
+         "first_name":"Kyle",
+         "last_name":"Watts",
+         "email":"tester3@example.com",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2020-05-27T08:43:44Z",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.user",
+      "pk":4,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
+         "last_login":"2020-05-28T13:04:39.064Z",
+         "is_superuser":false,
+         "username":"tester4",
+         "first_name":"Cameron",
+         "last_name":"Hunter",
+         "email":"tester4@example.com",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2020-05-27T08:43:44Z",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.user",
+      "pk":5,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
+         "last_login":"2020-05-28T13:04:39.064Z",
+         "is_superuser":false,
+         "username":"tester5",
+         "first_name":"Kieran",
+         "last_name":"Mitchell",
+         "email":"tester5@example.com",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2020-05-27T08:43:44Z",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.user",
+      "pk":6,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
+         "last_login":"2020-05-28T13:04:39.064Z",
+         "is_superuser":false,
+         "username":"tester6",
+         "first_name":"Thomas",
+         "last_name":"Cox",
+         "email":"tester6@example.com",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2020-05-27T08:43:44Z",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.user",
+      "pk":7,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
+         "last_login":"2020-05-28T13:04:39.064Z",
+         "is_superuser":false,
+         "username":"tester7",
+         "first_name":"Mauricio",
+         "last_name":"Mooney",
+         "email":"tester7@example.com",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2020-05-27T08:43:44Z",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.user",
+      "pk":8,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
+         "last_login":"2020-05-28T13:04:39.064Z",
+         "is_superuser":false,
+         "username":"tester8",
+         "first_name":"Parker",
+         "last_name":"Bryant",
+         "email":"tester8@example.com",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2020-05-27T08:43:44Z",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.user",
+      "pk":9,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
+         "last_login":"2020-05-28T13:04:39.064Z",
+         "is_superuser":false,
+         "username":"tester9",
+         "first_name":"Brooks",
+         "last_name":"Bishop",
+         "email":"tester9@example.com",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2020-05-27T08:43:44Z",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.user",
+      "pk":10,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
+         "last_login":"2020-05-28T13:04:39.064Z",
+         "is_superuser":false,
+         "username":"tester10",
+         "first_name":"Frank",
+         "last_name":"Anderson",
+         "email":"tester10@example.com",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2020-05-27T08:43:44Z",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":1,
+      "fields":{
+         "title":"School year is about to start",
+         "content":"School year is starting again",
+         "date_posted":"2020-05-26T21:38:07Z",
+         "author":1
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":2,
+      "fields":{
+         "title":"Class room 4c is out of order this week",
+         "content":"Walls are being repainted",
+         "date_posted":"2020-05-26T21:38:16Z",
+         "author":2
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":3,
+      "fields":{
+         "title":"Campaign to stop bullying",
+         "content":"Campaign website is up",
+         "date_posted":"2020-05-26T21:38:27Z",
+         "author":3
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":4,
+      "fields":{
+         "title":"Introducing a new teacher",
+         "content":"Jack Forrel has joined the team",
+         "date_posted":"2020-05-26T21:38:38Z",
+         "author":4
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":5,
+      "fields":{
+         "title":"All gym classes cancelled",
+         "content":"The gymnastics hall ceiling is leaking",
+         "date_posted":"2020-05-26T21:38:45Z",
+         "author":5
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":6,
+      "fields":{
+         "title":"Mothers day special",
+         "content":"Students will have one lesson to create a mothers day card",
+         "date_posted":"2020-05-26T21:38:54Z",
+         "author":6
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":7,
+      "fields":{
+         "title":"Sports during next semester",
+         "content":"",
+         "date_posted":"2020-05-26T21:39:26.182Z",
+         "author":7
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":8,
+      "fields":{
+         "title":"New sports equipments have arrived",
+         "content":"New basketballs and hockey sticks were purchased from AllDaySports",
+         "date_posted":"2020-05-26T21:39:31.929Z",
+         "author":8
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":9,
+      "fields":{
+         "title":"Teachers training day",
+         "content":"School will be closed on this particular day",
+         "date_posted":"2020-05-26T21:39:36.102Z",
+         "author":9
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":10,
+      "fields":{
+         "title":"School year closing ceremony",
+         "content":"The closing ceremony will be held in the ballroom",
+         "date_posted":"2020-05-26T21:39:40Z",
+         "author":10
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":11,
+      "fields":{
+         "title":"Musiikkiluokan kalustoa uusittu",
+         "content":"Uudet rummut ja piano",
+         "date_posted":"2020-05-26T21:39:44Z",
+         "author":1
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":12,
+      "fields":{
+         "title":"School cook retired",
+         "content":"Our beloved Annie is retiring",
+         "date_posted":"2020-05-26T21:40:00Z",
+         "author":2
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":13,
+      "fields":{
+         "title":"Hobbies operations",
+         "content":"The sports club is organizing football again",
+         "date_posted":"2020-05-26T21:40:04Z",
+         "author":9
+      }
+   },
+   {
+      "model":"news.post",
+      "pk":14,
+      "fields":{
+         "title":"School opening hours are changing",
+         "content":"The doors close in the evenings at 19:00",
+         "date_posted":"2020-05-26T21:40:12Z",
+         "author":8
+      }
+   },
+   {
+      "model":"messaging.message",
+      "pk":1,
+      "fields":{
+         "sender":1,
+         "title":"Unauthorized absence",
+         "content":"Dear madame. I am sorry to inform you that your child Matt has been skipping lessons again.",
+         "is_read":true,
+         "date_posted":"2020-05-01T13:21:49.237Z",
+         "recipients":[
+            1
+         ]
+      }
+   },
+   {
+      "model":"messaging.message",
+      "pk":2,
+      "fields":{
+         "sender":1,
+         "title":"Information for Class 4c parents",
+         "content":"Classroom 4c is out of order during the next week. Teaching will take place in temporary classroom.",
+         "is_read":true,
+         "date_posted":"2020-05-02T13:22:22.336Z",
+         "recipients":[
+            2
+         ]
+      }
+   },
+   {
+      "model":"messaging.message",
+      "pk":3,
+      "fields":{
+         "sender":1,
+         "title":"Funding for a school trip",
+         "content":"The parents council is looking for new ways to collect funding.",
+         "is_read":true,
+         "date_posted":"2020-05-03T13:22:37.656Z",
+         "recipients":[
+            3
+         ]
+      }
+   },
+   {
+      "model":"messaging.message",
+      "pk":4,
+      "fields":{
+         "sender":1,
+         "title":"Additional math tasks",
+         "content":"Deadline for these tasks is next monday.",
+         "is_read":true,
+         "date_posted":"2020-05-04T13:23:00.734Z",
+         "recipients":[
+            2
+         ]
+      }
+   },
+   {
+      "model":"messaging.message",
+      "pk":5,
+      "fields":{
+         "sender":1,
+         "title":"Leaving the school grounds at breaks",
+         "content":"Leaving the school grounds at breaks is allowed only with a teacher´s permission.",
+         "is_read":true,
+         "date_posted":"2020-05-05T13:23:15.578Z",
+         "recipients":[
+            1,
+            2,
+            3
+         ]
+      }
+   },
+   {
+      "model":"messaging.message",
+      "pk":6,
+      "fields":{
+         "sender":2,
+         "title":"Informing parents",
+         "content":"Be aware of the discovered trend in our school. Children are spitting bubblegum everywhere inside the school premises.",
+         "is_read":true,
+         "date_posted":"2020-05-06T13:23:15.578Z",
+         "recipients":[
+            1,
+            2,
+            3
+         ]
+      }
+   },
+   {
+      "model":"messaging.message",
+      "pk":7,
+      "fields":{
+         "sender":2,
+         "title":"Acquisition of school books",
+         "content":"School books are on discount.",
+         "is_read":true,
+         "date_posted":"2020-05-07T13:23:15.578Z",
+         "recipients":[
+            1,
+            2,
+            3
+         ]
+      }
+   },
+   {
+      "model":"messaging.message",
+      "pk":8,
+      "fields":{
+         "sender":3,
+         "title":"Detention",
+         "content":"I am sorry to inform you that your child Matt has gotten detention this friday.",
+         "is_read":true,
+         "date_posted":"2020-05-08T13:23:15.578Z",
+         "recipients":[
+            1,
+            2,
+            3
+         ]
+      }
+   },
+   {
+      "model":"messaging.message",
+      "pk":9,
+      "fields":{
+         "sender":3,
+         "title":"Survey for parents",
+         "content":"Please fill in the survey here by friday.",
+         "is_read":false,
+         "date_posted":"2020-05-09T13:23:15.578Z",
+         "recipients":[
+            1,
+            2,
+            3
+         ]
+      }
+   },
+   {
+      "model":"messaging.message",
+      "pk":10,
+      "fields":{
+         "sender":3,
+         "title":"Scores of the biology test",
+         "content":"All scores can be viewed in the learning portal.",
+         "is_read":false,
+         "date_posted":"2020-05-10T13:23:15.578Z",
+         "recipients":[
+            1,
+            2,
+            3
+         ]
+      }
+   },
+   {
+      "model":"users.profile",
+      "pk":1,
+      "fields":{
+         "user":1,
+         "image":"profile_pics/tester1_xjIlzJG.jpg"
+      }
+   },
+   {
+      "model":"users.profile",
+      "pk":2,
+      "fields":{
+         "user":2,
+         "image":"profile_pics/tester2_DpejGJZ.jpg"
+      }
+   },
+   {
+      "model":"users.profile",
+      "pk":3,
+      "fields":{
+         "user":3,
+         "image":"profile_pics/tester3_6pEPRgr.jpg"
+      }
+   },
+   {
+      "model":"users.profile",
+      "pk":4,
+      "fields":{
+         "user":4,
+         "image":"profile_pics/tester4_YukPLNG.jpg"
+      }
+   },
+   {
+      "model":"users.profile",
+      "pk":5,
+      "fields":{
+         "user":5,
+         "image":"profile_pics/tester5_8XgpYGh.jpg"
+      }
+   },
+   {
+      "model":"users.profile",
+      "pk":6,
+      "fields":{
+         "user":6,
+         "image":"profile_pics/tester6_YM1gbMf.jpg"
+      }
+   },
+   {
+      "model":"users.profile",
+      "pk":7,
+      "fields":{
+         "user":7,
+         "image":"profile_pics/tester7_TEoZTpC.jpg"
+      }
+   },
+   {
+      "model":"users.profile",
+      "pk":8,
+      "fields":{
+         "user":8,
+         "image":"profile_pics/tester8_vbIIPWN.jpg"
+      }
+   },
+   {
+      "model":"users.profile",
+      "pk":9,
+      "fields":{
+         "user":9,
+         "image":"profile_pics/tester9_bVYOByU.jpg"
+      }
+   },
+   {
+      "model":"users.profile",
+      "pk":10,
+      "fields":{
+         "user":10,
+         "image":"profile_pics/tester10_nM2kBiU.jpg"
+      }
+   },
+   {
+      "model":"auth.group",
+      "pk":1,
+      "fields":{
+         "name":"teacher",
+         "permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.group",
+      "pk":2,
+      "fields":{
+         "name":"child",
+         "permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.group",
+      "pk":3,
+      "fields":{
+         "name":"parent",
+         "permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.group",
+      "pk":4,
+      "fields":{
+         "name":"staff",
+         "permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"polls.question",
+      "pk":1,
+      "fields":{
+         "question_text":"Vote as a member of the board of the parents' association",
+         "pub_date":"2020-06-07T09:25:01Z"
+      }
+   },
+   {
+      "model":"polls.choice",
+      "pk":1,
+      "fields":{
+         "question":1,
+         "choice_text":"Denis Stark",
+         "votes":0
+      }
+   },
+   {
+      "model":"polls.choice",
+      "pk":2,
+      "fields":{
+         "question":1,
+         "choice_text":"Phyllis Cramer",
+         "votes":1
+      }
+   },
+   {
+      "model":"polls.choice",
+      "pk":3,
+      "fields":{
+         "question":1,
+         "choice_text":"Dan Flanders",
+         "votes":0
+      }
+   }
+]
