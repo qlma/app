@@ -21,26 +21,10 @@ class Migration(migrations.Migration):
         superuser.set_password(os.environ['ADMIN_PASSWORD'])
         superuser.save()
 
-    def create_testusers(apps, schema_editor):
-        testuser1 = get_user_model()(
-            username="tester1", 
-            email="tester1@example.com", 
-            password="Pass12345"
-        )
-        testuser1.save()
-
-        testuser2 = get_user_model()(
-            username="tester2", 
-            email="tester2@example.com", 
-            password="Pass12345"
-        )
-        testuser2.save()
-
     dependencies = [
         ('users', '0001_initial')
     ]
 
     operations = [
-        migrations.RunPython(create_testusers),
         migrations.RunPython(create_superuser),
     ]

@@ -302,7 +302,7 @@
       "pk":11,
       "fields":{
          "title":"New music class equipment",
-         "content":"New drums and piano arrived today",
+         "content":"New drums and piano arrived",
          "date_posted":"2020-05-26T21:39:44Z",
          "author":1
       }
@@ -487,14 +487,6 @@
             2,
             3
          ]
-      }
-   },
-   {
-      "model":"users.profile",
-      "pk":1,
-      "fields":{
-         "user":1,
-         "image":"profile_pics/tester1_xjIlzJG.jpg"
       }
    },
    {
