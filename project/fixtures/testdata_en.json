@@ -301,8 +301,8 @@
       "model":"news.post",
       "pk":11,
       "fields":{
-         "title":"Musiikkiluokan kalustoa uusittu",
-         "content":"Uudet rummut ja piano",
+         "title":"New music class equipment",
+         "content":"New drums and piano arrived today",
          "date_posted":"2020-05-26T21:39:44Z",
          "author":1
       }
