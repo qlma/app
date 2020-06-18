@@ -69,6 +69,7 @@ urlpatterns = [
     path('', include('news.urls')),
     path('', include('messaging.urls')),
     path('', include('cal.urls')),
+    path('', include('users.urls')),
 
     path('staff/', views.staff, name='staff'),
     

@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from django.contrib.auth.models import User
+from users.models import CustomUser
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-
+from django.views.generic import (
+    ListView,
+)
+from django.urls import reverse
 
 def register(request):
     if request.method == 'POST':
@@ -42,8 +46,64 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 def user(request, username):
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(CustomUser, username=username)
     context = {
         'user': user
     }
     return render(request, 'users/user.html', context)
+
+def manage_users(request):
+    users=CustomUser.objects.all()#filter(groups__name='staff')
+    return render(request,"admin/manage_users.html",{"users":users})
+
+def add_user(request):
+    return render(request,"admin/add_user.html")
+
+def add_user_save(request):
+    if request.method!="POST":
+        return HttpResponse("Method Not Allowed")
+    else:
+        username=request.POST.get("username")
+        password=request.POST.get("password")
+        first_name=request.POST.get("first_name")
+        last_name=request.POST.get("last_name")
+        email=request.POST.get("email")
+        address=request.POST.get("address")
+        try:
+            user=CustomUser.objects.create_user(username=username,password=password,first_name=first_name,last_name=last_name,email=email,address=address)
+            user.save()
+            messages.success(request,"Successfully Added User")
+            return HttpResponseRedirect(reverse("add_user"))
+        except:
+            messages.error(request,"Failed to Add User")
+            return HttpResponseRedirect(reverse("add_user"))
+
+def edit_user(request,user_id):
+    user=CustomUser.objects.get(id=user_id)
+    return render(request,"admin/edit_user.html",{"user":user,"user_id":user_id})
+
+def edit_user_save(request):
+    if request.method!="POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        user_id=request.POST.get("user_id")
+        first_name=request.POST.get("first_name")
+        last_name=request.POST.get("last_name")
+        email=request.POST.get("email")
+        username=request.POST.get("username")
+        address=request.POST.get("address")
+
+        try:
+            user=CustomUser.objects.get(id=user_id)
+            user.first_name=first_name
+            user.last_name=last_name
+            user.email=email
+            user.username=username
+            user.address=address
+            user.save()
+
+            messages.success(request,"Successfully Edited User")
+            return HttpResponseRedirect(reverse("edit_user",kwargs={"user_id":user_id}))
+        except:
+            messages.error(request,"Failed to Edit User")
+            return HttpResponseRedirect(reverse("edit_user",kwargs={"user_id":user_id}))

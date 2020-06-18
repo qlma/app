@@ -4,12 +4,12 @@ from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
 )
+from users.models import CustomUser
 from .models import Message
 
 class MessageListView(LoginRequiredMixin, ListView):
@@ -20,12 +20,12 @@ class MessageListView(LoginRequiredMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.request.user)
+        user = get_object_or_404(CustomUser, username=self.request.user)
         return Message.objects.filter(recipients=user).order_by('-date_posted')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = get_object_or_404(User, username=self.request.user)
+        user = get_object_or_404(CustomUser, username=self.request.user)
         context['count'] = Message.objects.filter(recipients=user).filter(is_read=False).count()
         return context
 
@@ -36,7 +36,7 @@ class MessageSentListView(LoginRequiredMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.request.user)
+        user = get_object_or_404(CustomUser, username=self.request.user)
         return Message.objects.filter(sender=user).order_by('-date_posted')
 
 class MessageDetailView(LoginRequiredMixin, DetailView):
@@ -61,7 +61,7 @@ def search(request):
     if request.is_ajax():
         query = request.GET.get("term", "")
         try:
-            users = User.objects.filter(
+            users = CustomUser.objects.filter(
                         Q(username__istartswith=query) |
                         Q(first_name__istartswith=query) |
                         Q(last_name__istartswith=query)

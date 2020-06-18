@@ -3,7 +3,7 @@
     <h1>Groups</h1>
 
     {% for group in groups %}
-        <a href="{% url 'group-detail' group.id %}">{{ group.name }}</a>
+        <a href="{% url 'group-detail' group.id %}">{{ group.name }}</a><br/>
     {% endfor %}
 
 {% endblock content %}
