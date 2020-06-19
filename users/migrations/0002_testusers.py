@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
             username=os.environ['ADMIN_USERNAME'],
             email=os.environ['ADMIN_EMAIL'],
             last_login=timezone.now(),
+            user_type=5,
         )
         superuser.set_password(os.environ['ADMIN_PASSWORD'])
         superuser.save()

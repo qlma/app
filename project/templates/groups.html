@@ -1,9 +1,44 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
-    <h1>Groups</h1>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
 
-    {% for group in groups %}
-        <a href="{% url 'group-detail' group.id %}">{{ group.name }}</a><br/>
-    {% endfor %}
-
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Groups</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for group in groups %}
+                    <tr>
+                      <td>{{ group.id }}</td>
+                      <td>{{ group.name }}</td>
+                      <td><a href="{% url 'group-detail' group.id %}" class="btn btn-success">Edit</a></td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
 {% endblock content %}
+

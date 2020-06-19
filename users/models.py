@@ -7,11 +7,18 @@ from PIL import Image
 
 
 class CustomUser(AbstractUser):
-    address=models.TextField()
+    USER_TYPES = (
+        ('1', 'Student'),
+        ('2', 'Teacher'),
+        ('3', 'Parent'),
+        ('4', 'Admin')
+    )
+    user_type = models.CharField(choices=USER_TYPES, default=1, max_length=1)
 
 class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    address=models.CharField(max_length=150)
 
     def __str__(self):
         return f'{self.user.username} Profile'

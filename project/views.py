@@ -5,7 +5,7 @@ from .models import School, Event
 from django.contrib.auth.models import Group
 
 from django.shortcuts import redirect
-from .decorators import unacthenticated_user, allowed_users
+from .decorators import unacthenticated_user, allowed_user_types
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic import (
@@ -35,7 +35,7 @@ def redirect_login(request):
 def about(request):
     return render(request, 'about.html', {'title': 'About'})
 
-@allowed_users(allowed_roles=['staff'])
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def staff(request):
     return render(request, 'staff.html', {'title': 'Staff'})
 

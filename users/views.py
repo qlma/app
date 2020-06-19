@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from users.models import CustomUser
+from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.views.generic import (
@@ -52,9 +53,9 @@ def user(request, username):
     }
     return render(request, 'users/user.html', context)
 
-def manage_users(request):
-    users=CustomUser.objects.all()#filter(groups__name='staff')
-    return render(request,"admin/manage_users.html",{"users":users})
+def users(request):
+    users=CustomUser.objects.all()
+    return render(request,"admin/users.html", { "users": users })
 
 def add_user(request):
     return render(request,"admin/add_user.html")
@@ -69,6 +70,7 @@ def add_user_save(request):
         last_name=request.POST.get("last_name")
         email=request.POST.get("email")
         address=request.POST.get("address")
+
         try:
             user=CustomUser.objects.create_user(username=username,password=password,first_name=first_name,last_name=last_name,email=email,address=address)
             user.save()
@@ -78,28 +80,37 @@ def add_user_save(request):
             messages.error(request,"Failed to Add User")
             return HttpResponseRedirect(reverse("add_user"))
 
-def edit_user(request,user_id):
+def edit_user(request, user_id):
     user=CustomUser.objects.get(id=user_id)
-    return render(request,"admin/edit_user.html",{"user":user,"user_id":user_id})
+    groups = Group.objects.all()
+    return render(request,"admin/edit_user.html",{ "user":user, "user_id":user_id, "groups": groups })
 
 def edit_user_save(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
+
         user_id=request.POST.get("user_id")
         first_name=request.POST.get("first_name")
         last_name=request.POST.get("last_name")
         email=request.POST.get("email")
         username=request.POST.get("username")
         address=request.POST.get("address")
+        group_id = request.POST.get('group_id')
 
-        try:
+        try:    
+        
             user=CustomUser.objects.get(id=user_id)
             user.first_name=first_name
             user.last_name=last_name
             user.email=email
             user.username=username
             user.address=address
+
+            user.groups.clear()
+            g = Group.objects.get(id=group_id)
+            g.user_set.add(user)
+
             user.save()
 
             messages.success(request,"Successfully Edited User")

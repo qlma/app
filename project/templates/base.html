@@ -39,9 +39,11 @@
               -->
             </div>
             
-            <!-- Navbar Right Side -->
+            <!-- Navbar Right Side  -->
             <div class="navbar-nav">
-              <a class="nav-item nav-link" href="{% url 'staff' %}"><i class="fa fa-cog fa-inverse"></i>Staff</a>
+              {% if request.user.get_user_type_display == 'Teacher' or request.user.get_user_type_display == 'Admin' %}
+                <a class="nav-item nav-link" href="{% url 'staff' %}"><i class="fa fa-cog fa-inverse"></i>Staff</a>
+              {% endif %}
               <a class="nav-item nav-link" href="{% url 'profile' %}"><i class="fa fa-user"></i>{{ user.get_username }}</a>
               <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fa fa-key"></i>Logout</a>
             </div>

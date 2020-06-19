@@ -595,7 +595,7 @@
       "model":"auth.group",
       "pk":1,
       "fields":{
-         "name":"teacher",
+         "name":"Unassigned",
          "permissions":[
 
          ]
@@ -605,7 +605,7 @@
       "model":"auth.group",
       "pk":2,
       "fields":{
-         "name":"child",
+         "name":"1A",
          "permissions":[
 
          ]
@@ -615,7 +615,7 @@
       "model":"auth.group",
       "pk":3,
       "fields":{
-         "name":"parent",
+         "name":"1B",
          "permissions":[
 
          ]
@@ -625,7 +625,17 @@
       "model":"auth.group",
       "pk":4,
       "fields":{
-         "name":"staff",
+         "name":"2A",
+         "permissions":[
+
+         ]
+      }
+   },
+   {
+      "model":"auth.group",
+      "pk":5,
+      "fields":{
+         "name":"2B",
          "permissions":[
 
          ]

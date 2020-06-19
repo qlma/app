@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
-                ('address', models.TextField(blank=True, help_text='Users home address.', verbose_name='address')),
+                ('user_type', models.CharField(choices=[(1, 'Student'), (2, 'Teacher'), (3, 'Parent'), (4, 'Admin')], default=1, max_length=10)),
             ],
             options={
                 'verbose_name': 'user',
@@ -49,6 +49,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('image', models.ImageField(default='default.jpg', upload_to='profile_pics')),
+                ('address', models.CharField(blank=True, max_length=150, help_text='Users home address.', verbose_name='address')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

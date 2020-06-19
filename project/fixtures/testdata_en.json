@@ -18,7 +18,8 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 2
       }
    },
    {
@@ -40,7 +41,8 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 2
       }
    },
    {
@@ -62,7 +64,8 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 1
       }
    },
    {
@@ -84,7 +87,8 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 1
       }
    },
    {
@@ -106,7 +110,8 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 1
       }
    },
    {
@@ -128,7 +133,8 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 3
       }
    },
    {
@@ -150,7 +156,8 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 4
       }
    },
    {
@@ -172,7 +179,8 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 4
       }
    },
    {
@@ -194,7 +202,8 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 1
       }
    },
    {
@@ -565,7 +574,7 @@
       "model":"auth.group",
       "pk":1,
       "fields":{
-         "name":"teacher",
+         "name":"1A",
          "permissions":[
 
          ]
@@ -575,7 +584,7 @@
       "model":"auth.group",
       "pk":2,
       "fields":{
-         "name":"child",
+         "name":"1B",
          "permissions":[
 
          ]
@@ -585,7 +594,7 @@
       "model":"auth.group",
       "pk":3,
       "fields":{
-         "name":"parent",
+         "name":"2A",
          "permissions":[
 
          ]
@@ -595,7 +604,7 @@
       "model":"auth.group",
       "pk":4,
       "fields":{
-         "name":"staff",
+         "name":"2B",
          "permissions":[
 
          ]
