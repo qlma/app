@@ -7,6 +7,7 @@ from django.contrib.auth.models import Group
 from django.shortcuts import redirect
 from .decorators import unacthenticated_user, allowed_user_types
 from django.contrib.auth.mixins import LoginRequiredMixin
+from users.models import CustomUser
 
 from django.views.generic import (
     ListView,
@@ -24,8 +25,16 @@ class GroupListView(LoginRequiredMixin, ListView):
 
 class GroupDetailView(LoginRequiredMixin, DetailView):
     model = Group
+    template_name = 'group_detail.html'
+    context_object_name = 'users'
 
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        group_id = self.kwargs.get('pk', None)
+        group = get_object_or_404(Group, id=group_id)
+        users = CustomUser.objects.filter(groups__name=group.name)
+        context["users"] = users
+        return context
 
 @unacthenticated_user
 def redirect_login(request):

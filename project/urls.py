@@ -74,7 +74,7 @@ urlpatterns = [
     path('staff/', views.staff, name='staff'),
     
     path('groups/', GroupListView.as_view(), name='groups'),
-    path('group/<int:pk>/', GroupDetailView.as_view(template_name='group_detail.html'), name='group-detail'),
+    path('group/<int:pk>/', GroupDetailView.as_view(), name='group-detail'),
 
     path('school/<int:school_id>/', views.school, name='school'),
     path('about/', views.about, name='about'),

@@ -14,17 +14,6 @@ class School(models.Model):
     def __str__(self):
         return self.name
 
-class Group(models.Model):
-    name = models.CharField('Group Name', max_length=120)
-    code = models.CharField('Group Code', max_length=12)
-    teacher = models.CharField('Teacher Name', max_length=120)
-    email_address = models.EmailField('Email Address')
-    phone = models.CharField('Contact Phone', max_length=20)
-    web = models.URLField('Web Address')
-
-    def __str__(self):
-        return self.name
-
 class Event(models.Model):
     name = models.CharField('Event Name', max_length=120)
     event_date = models.DateTimeField('Event Date')

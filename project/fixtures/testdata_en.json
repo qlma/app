@@ -10,7 +10,7 @@
          "first_name":"Gracie",
          "last_name":"Armstrong",
          "email":"tester2@example.com",
-         "is_staff":true,
+         "is_staff":false,
          "is_active":true,
          "date_joined":"2020-05-26T21:35:29.320Z",
          "groups":[
