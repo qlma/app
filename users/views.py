@@ -5,9 +5,14 @@ from users.models import CustomUser
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+#from .decorators import unacthenticated_user, allowed_user_types
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.views.generic import (
     ListView,
+    DetailView,
 )
+
 from django.urls import reverse
 
 def register(request):
@@ -118,3 +123,25 @@ def edit_user_save(request):
         except:
             messages.error(request,"Failed to Edit User")
             return HttpResponseRedirect(reverse("edit_user",kwargs={"user_id":user_id}))
+
+class GroupListView(LoginRequiredMixin, ListView):
+    model = Group
+    template_name = 'admin/groups.html'
+    context_object_name = 'groups'
+
+    def get_queryset(self):
+        groups = Group.objects.all()
+        return groups
+
+class GroupDetailView(LoginRequiredMixin, DetailView):
+    model = Group
+    template_name = 'admin/group_detail.html'
+    context_object_name = 'users'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        group_id = self.kwargs.get('pk', None)
+        group = get_object_or_404(Group, id=group_id)
+        users = CustomUser.objects.filter(groups__name=group.name)
+        context["users"] = users
+        return context

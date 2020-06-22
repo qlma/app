@@ -23,10 +23,7 @@ from users import views as user_views
 from . import views
 from .views import redirect_login
 
-from .views import (
-    GroupListView,
-    GroupDetailView,
-)
+
 
 admin.site.site_header = "Qlma Admin Portal"
 admin.site.site_title = "Qlma Admin Portal"
@@ -72,9 +69,7 @@ urlpatterns = [
     path('', include('users.urls')),
 
     path('staff/', views.staff, name='staff'),
-    
-    path('groups/', GroupListView.as_view(), name='groups'),
-    path('group/<int:pk>/', GroupDetailView.as_view(), name='group-detail'),
+
 
     path('school/<int:school_id>/', views.school, name='school'),
     path('about/', views.about, name='about'),
