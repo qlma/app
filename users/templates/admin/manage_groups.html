@@ -26,7 +26,7 @@
                     <tr>
                       <td>{{ group.id }}</td>
                       <td>{{ group.name }}</td>
-                      <td><a href="{% url 'group-detail' group.id %}" class="btn btn-success">Edit</a></td>
+                      <td><a href="{% url 'manage_group' group.id %}" class="btn btn-success">Edit</a></td>
                     </tr>
                   {% endfor %}
                   </tbody>

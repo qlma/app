@@ -5,7 +5,7 @@ from users.models import CustomUser
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-#from .decorators import unacthenticated_user, allowed_user_types
+from project.decorators import unacthenticated_user, allowed_user_types
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic import (
@@ -58,13 +58,16 @@ def user(request, username):
     }
     return render(request, 'users/user.html', context)
 
-def users(request):
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
+def manage_users(request):
     users=CustomUser.objects.all()
-    return render(request,"admin/users.html", { "users": users })
+    return render(request,"admin/manage_users.html", { "users": users })
 
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def add_user(request):
     return render(request,"admin/add_user.html")
 
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def add_user_save(request):
     if request.method!="POST":
         return HttpResponse("Method Not Allowed")
@@ -85,11 +88,13 @@ def add_user_save(request):
             messages.error(request,"Failed to Add User")
             return HttpResponseRedirect(reverse("add_user"))
 
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def edit_user(request, user_id):
     user=CustomUser.objects.get(id=user_id)
     groups = Group.objects.all()
     return render(request,"admin/edit_user.html",{ "user":user, "user_id":user_id, "groups": groups })
 
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def edit_user_save(request):
     if request.method!="POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
@@ -124,24 +129,17 @@ def edit_user_save(request):
             messages.error(request,"Failed to Edit User")
             return HttpResponseRedirect(reverse("edit_user",kwargs={"user_id":user_id}))
 
-class GroupListView(LoginRequiredMixin, ListView):
-    model = Group
-    template_name = 'admin/groups.html'
-    context_object_name = 'groups'
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
+def manage_groups(request):
+    groups=Group.objects.all()
+    return render(request,"admin/manage_groups.html", { "groups": groups })
 
-    def get_queryset(self):
-        groups = Group.objects.all()
-        return groups
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
+def manage_group(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    users = CustomUser.objects.filter(groups__name=group.name)
+    return render(request,"admin/manage_group.html", { "users": users })
 
-class GroupDetailView(LoginRequiredMixin, DetailView):
-    model = Group
-    template_name = 'admin/group_detail.html'
-    context_object_name = 'users'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        group_id = self.kwargs.get('pk', None)
-        group = get_object_or_404(Group, id=group_id)
-        users = CustomUser.objects.filter(groups__name=group.name)
-        context["users"] = users
-        return context
+def groups(request):
+    groups=Group.objects.all()
+    return render(request,"groups/groups.html", { "groups": groups })
