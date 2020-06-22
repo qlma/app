@@ -40,6 +40,7 @@
                   <div class="form-group">
                     <label>Group</label>
                     <select class="form-control" name="group_id">
+                      <option value="">None</option>
                       {% for group in groups %}
                         {% if group in user.groups.all %}
                           <option value="{{ group.id }}" selected>{{ group.name }}</option>

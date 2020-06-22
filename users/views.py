@@ -118,21 +118,23 @@ def edit_user_save(request):
             user.address=address
 
             user.groups.clear()
-            g = Group.objects.get(id=group_id)
-            g.user_set.add(user)
+            if group_id != "":    
+                g = Group.objects.get(id=group_id)
+                g.user_set.add(user)
 
             user.save()
 
             messages.success(request,"Successfully Edited User")
-            return HttpResponseRedirect(reverse("edit_user",kwargs={"user_id":user_id}))
+            return HttpResponseRedirect(reverse("edit_user", kwargs={"user_id":user_id}))
         except:
             messages.error(request,"Failed to Edit User")
-            return HttpResponseRedirect(reverse("edit_user",kwargs={"user_id":user_id}))
+            return HttpResponseRedirect(reverse("edit_user", kwargs={"user_id":user_id}))
 
 @allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def manage_groups(request):
+    users_without_group=CustomUser.objects.filter(groups__isnull=True)
     groups=Group.objects.all()
-    return render(request,"admin/manage_groups.html", { "groups": groups })
+    return render(request,"admin/manage_groups.html", { "users_without_group": users_without_group, "groups": groups })
 
 @allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def manage_group(request, group_id):
