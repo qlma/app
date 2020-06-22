@@ -5,23 +5,19 @@
     <section class="content">
       <div class="container-fluid">
 
+        {% for group in groups %}
         <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Groups</h3>
+                <h3 class="card-title">Group {{ group.name }}</h3>
               </div>
               <!-- /.card-header -->
               
               <div class="card-body table-responsive p-0">
-                {% for group in groups %}
-                <div style="padding-left: 20px;">
-                  <h2>{{ group.name }}</h2>
-                </div>
                 <table class="table table-hover text-nowrap">
                   <thead>
                     <tr>
-                      <th>ID</th>
                       <th>Username</th>
                       <th>Firstname</th>
                       <th>Lastname</th>
@@ -30,15 +26,15 @@
                   <tbody>
                     {% for user in group.user_set.all %}
                     <tr>
-                      <td>{{ user.id }}</td>
                       <td>{{ user.username }}</td>
                       <td>{{ user.first_name }}</td>
                       <td>{{ user.last_name }}</td>
                     </tr>
                     {% endfor %}
+                  
                   </tbody>
                 </table>
-                {% endfor %}
+                
               </div>
               
               <!-- /.card-body -->
@@ -46,6 +42,7 @@
             <!-- /.card -->
           </div>
         </div>
+        {% endfor %}
       </div>
     </section>
     <!-- /.content -->

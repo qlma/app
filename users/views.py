@@ -138,7 +138,7 @@ def manage_groups(request):
 def manage_group(request, group_id):
     group = get_object_or_404(Group, id=group_id)
     users = CustomUser.objects.filter(groups__name=group.name)
-    return render(request,"admin/manage_group.html", { "users": users })
+    return render(request,"admin/manage_group.html", { "group": group, "users": users })
 
 def groups(request):
     groups=Group.objects.all()
