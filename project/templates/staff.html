@@ -28,6 +28,18 @@
                 Manage groups
             </div>
         </a>
+        <a href="{% url 'timetable:add_course' %}">
+            <div class="submenu">
+                <h2><i class="fa fa-file-o"></i></h2>
+                Add course
+            </div>
+        </a>
+        <a href="{% url 'timetable:courses' %}">
+            <div class="submenu">
+                <h2><i class="fa fa-file-o"></i></h2>
+                Courses
+            </div>
+        </a>
     </div>
 
 {% endblock content %}

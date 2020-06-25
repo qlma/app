@@ -67,13 +67,13 @@ urlpatterns = [
     path('', include('messaging.urls')),
     path('', include('cal.urls')),
     path('', include('users.urls')),
+    path('', include('timetable.urls')),
 
     path('staff/', views.staff, name='staff'),
 
 
     path('school/<int:school_id>/', views.school, name='school'),
     path('about/', views.about, name='about'),
-    path('timetable/', views.timetable, name='timetable'),
     path('help/', views.help, name='help'),
 ]
 

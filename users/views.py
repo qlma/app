@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.contrib import messages
 from users.models import CustomUser
 from django.contrib.auth.models import Group
@@ -13,7 +14,6 @@ from django.views.generic import (
     DetailView,
 )
 
-from django.urls import reverse
 
 def register(request):
     if request.method == 'POST':

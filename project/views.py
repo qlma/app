@@ -27,8 +27,5 @@ def school(request, school_id):
 def about(request):
     return render(request, 'about.html', {'title': 'About'})
 
-def timetable(request):
-    return render(request, 'timetable.html', {'title': 'Timetable'})
-
 def help(request):
     return render(request, 'help.html', {'title': 'Help'})

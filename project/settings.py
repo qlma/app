@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'news.apps.NewsConfig',
     'messaging.apps.MessagingConfig',
+    'timetable.apps.TimetableConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
