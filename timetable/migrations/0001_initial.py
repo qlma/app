@@ -14,10 +14,23 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Subject',
+            fields=[
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('subject_name', models.CharField(max_length=255)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('updated_at', models.DateTimeField(auto_now_add=True)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Course',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=120)),
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=255)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('updated_at', models.DateTimeField(auto_now_add=True)),
+                ('subject_id', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='timetable.Subject')),
+                ('staff_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.CustomUser')),
             ],
         )
     ]

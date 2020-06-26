@@ -9,30 +9,31 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Add Course</h3>
+                <h3 class="card-title">Edit Course</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" action="/add_course_save" method="post">
+              <form role="form" action="/edit_course_save" method="post">
                 {% csrf_token %}
                 <div class="card-body">
                   <div class="form-group">
-                    <label>Course Name </label>
-                    <input type="text" class="form-control" name="course" placeholder="Enter Course">
+                    <label>Course Name</label>
+                    <input type="text" class="form-control" name="course" placeholder="Enter Course" value="{{ course.name }}">
+                    <input type="hidden" name="course_id" value="{{ course.id }}">
                   </div>
                   <div class="form-group">
-                    <label>Subject </label>
+                    <label>Subject</label>
                     <select class="form-control" name="subject">
-                        {% for subject in subjects %}
-                          <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
-                        {% endfor %}
+                      {% for subject in subjects %}
+                        <option value="{{ subject.id }}" {% if subject.id == course.subject_id.id %} selected {% endif %}>{{ subject.subject_name }}</option>
+                      {% endfor %}
                     </select>
                   </div>
                   <div class="form-group">
-                    <label>Teacher</label>
+                    <label>Staff</label>
                     <select class="form-control" name="staff">
                         {% for staff in staffs %}
-                          <option value="{{ staff.id }}">{{ staff.first_name }} {{ staff.last_name }}</option>
+                          <option value="{{ staff.id }}" {% if staff.id == subject.staff_id.id %} selected {% endif %}>{{ staff.first_name }} {{ staff.last_name }}</option>
                         {% endfor %}
                     </select>
                   </div>
@@ -40,7 +41,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-block">Add Course</button>
+                  <button type="submit" class="btn btn-primary btn-block">Save Course</button>
                 </div>
               </form>
             </div>
