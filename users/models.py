@@ -21,7 +21,7 @@ class Profile(models.Model):
     address=models.CharField(max_length=150)
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return self.user.username
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

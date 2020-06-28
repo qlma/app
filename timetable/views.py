@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.models import Group
@@ -5,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.views import generic
 from users.models import CustomUser
-from .models import Course, Subject
+from .models import Course, Subject, Lesson
 
 
 def timetable(request):
@@ -68,6 +69,7 @@ def edit_course_save(request):
             messages.error(request,"Failed to Edit Course")
             return HttpResponseRedirect(reverse("timetable:edit_course", kwargs={"course_id":course_id}))
 
+
 def add_subject(request):
     return render(request,"add_subject.html")
 
@@ -112,3 +114,136 @@ def edit_subject_save(request):
 def manage_subjects(request):
     subjects=Subject.objects.all()
     return render(request,"manage_subjects.html", {"subjects":subjects})
+
+
+
+
+def add_lesson(request):
+    courses=Course.objects.all()
+    WEEKDAYS = (
+        (0, 'Monday'),
+        (1, 'Tuesday'),
+        (2, 'Wednesday'),
+        (3, 'Thursday'),
+        (4, 'Friday'),
+        (5, 'Saturday'),
+        (6, 'Sunday'),
+    )
+    HOURS = (
+        (0, '08'),
+        (1, '09'),
+        (2, '10'),
+        (3, '11'),
+        (4, '12'),
+        (5, '13'),
+        (6, '14'),
+        (7, '15'),
+        (8, '16'),
+        (9, '17'),
+    )
+    MINUTES = (
+        (0, '00'),
+        (1, '15'),
+        (2, '30'),
+    )
+    groups=Group.objects.all()
+    return render(request, "add_lesson.html", {"courses":courses, "groups": groups, "days":WEEKDAYS, "hours": HOURS, "minutes": MINUTES})
+
+def add_lesson_save(request):
+    if request.method!="POST":
+        return HttpResponse("Method Not Allowed")
+    else:
+        course_id=request.POST.get("course")
+        course=Course.objects.get(id=course_id)
+
+        group_id=request.POST.get("group")
+        group=Group.objects.get(id=group_id)
+        
+        weekday=request.POST.get("weekday")
+        
+        starts_at_hour=int(request.POST.get("starts_at_hour"))
+        starts_at_minute=int(request.POST.get("starts_at_minute"))
+        ends_at_hour=int(request.POST.get("ends_at_hour"))
+        ends_at_minute=int(request.POST.get("ends_at_minute"))
+
+        starts_at = datetime.time(starts_at_hour, starts_at_minute, 0)
+        ends_at = datetime.time(ends_at_hour, ends_at_minute, 0)
+
+        try:
+            lesson_model=Lesson(course_id=course, group_id=group, weekday=weekday, starts_at=starts_at, ends_at=ends_at)
+            lesson_model.save()
+            messages.success(request,"Successfully Added Lesson")
+            return HttpResponseRedirect(reverse("timetable:add_lesson"))
+        except:
+            messages.error(request,"Failed To Add Lesson")
+            return HttpResponseRedirect(reverse("timetable:add_lesson"))
+
+def manage_lessons(request):
+    lessons=Lesson.objects.all()
+    return render(request,"manage_lessons.html", {"lessons":lessons})
+
+def edit_lesson(request, lesson_id):
+    lesson=Lesson.objects.get(id=lesson_id)
+    courses=Course.objects.all()
+    groups=Group.objects.all()
+    WEEKDAYS = (
+        (0, 'Monday'),
+        (1, 'Tuesday'),
+        (2, 'Wednesday'),
+        (3, 'Thursday'),
+        (4, 'Friday'),
+        (5, 'Saturday'),
+        (6, 'Sunday'),
+    )
+    HOURS = (
+        (0, '08'),
+        (1, '09'),
+        (2, '10'),
+        (3, '11'),
+        (4, '12'),
+        (5, '13'),
+        (6, '14'),
+        (7, '15'),
+        (8, '16'),
+        (9, '17'),
+    )
+    MINUTES = (
+        (0, '00'),
+        (1, '15'),
+        (2, '30'),
+    )  
+    return render(request,"edit_lesson.html", {"lesson":lesson, "courses":courses, "groups": groups, "days":WEEKDAYS, "hours": HOURS, "minutes": MINUTES})
+
+def edit_lesson_save(request):
+    if request.method!="POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        lesson_id=request.POST.get("lesson_id")
+        group_id=request.POST.get("group")
+        course_id=request.POST.get("course")
+        weekday=request.POST.get("weekday")
+
+        starts_at_hour=int(request.POST.get("starts_at_hour"))
+        starts_at_minute=int(request.POST.get("starts_at_minute"))
+        ends_at_hour=int(request.POST.get("ends_at_hour"))
+        ends_at_minute=int(request.POST.get("ends_at_minute"))
+
+        starts_at = datetime.time(starts_at_hour, starts_at_minute, 0)
+        ends_at = datetime.time(ends_at_hour, ends_at_minute, 0)
+
+        try:
+            lesson=Lesson.objects.get(id=lesson_id)
+            group=Group.objects.get(id=group_id)
+            lesson.group_id=group
+            course=Course.objects.get(id=course_id)
+            lesson.course_id=course
+            lesson.weekday=int(weekday)
+            print("weekday", weekday)
+            lesson.starts_at=starts_at
+            lesson.ends_at=ends_at
+            lesson.save()
+            messages.success(request,"Successfully Edited Lesson")
+            return HttpResponseRedirect(reverse("timetable:edit_lesson", kwargs={"lesson_id":lesson_id}))
+        except:
+            messages.error(request,"Failed to Edit Lesson")
+            return HttpResponseRedirect(reverse("timetable:edit_lesson", kwargs={"lesson_id":lesson_id}))

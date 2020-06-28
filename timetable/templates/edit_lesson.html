@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Edit Lesson</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="/edit_lesson_save" method="post">
+                {% csrf_token %}
+                <div class="card-body">
+
+                    <input type="hidden" name="lesson_id" value="{{ lesson.id }}">
+
+                    <div class="form-group">
+                      <label>Course</label>
+                      <select class="form-control" name="course">
+                          {% for course in courses %}
+                            <option value="{{ course.id }}" {% if course.id == lesson.course_id.id %} selected {% endif %}>{{ course.name }}</option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Group</label>
+                      <select class="form-control" name="group">
+                          {% for group in groups %}
+                            <option value="{{ group.id }}" {% if group.id == lesson.group_id.id %} selected {% endif %}>{{ group.name }}</option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Weekday</label>
+                        <select class="form-control" name="weekday">
+                          {% for day in days %}
+                            <option value="{{ day.0 }}" {% if day.0 == lesson.weekday|add:"0" %} selected {% endif %}>{{ day.1 }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Begin</label>
+                        <select class="form-control" name="starts_at_hour">
+                          {% for hour in hours %}
+                            <option value="{{ hour.1 }}" {% if hour.1 == lesson.starts_at|time:"H" %} selected {% endif %}>{{ hour.1 }}</option>
+                          {% endfor %}
+                        </select>
+                        <select class="form-control" name="starts_at_minute">
+                          {% for minute in minutes %}
+                            <option value="{{ minute.1 }}" {% if minute.1 == lesson.starts_at|time:"i" %} selected {% endif %}>{{ minute.1 }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>End</label>
+                        <select class="form-control" name="ends_at_hour">
+                          {% for hour in hours %}
+                            <option value="{{ hour.1 }}" {% if hour.1 == lesson.ends_at|time:"H" %} selected {% endif %}>{{ hour.1 }}</option>
+                          {% endfor %}
+                        </select>
+                        <select class="form-control" name="ends_at_minute">
+                          {% for minute in minutes %}
+                            <option value="{{ minute.1 }}" {% if minute.1 == lesson.ends_at|time:"i" %} selected {% endif %}>{{ minute.1 }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary btn-block">Save Subject</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+
+          </div>
+          </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock content %}
