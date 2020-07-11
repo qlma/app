@@ -1,19 +1,19 @@
 <div class="col-lg-12">
     <a href="{% url 'messaging:messaging' %}">
-        <div class="submenu selected">
+        <div class="tile-button selected">
             <h2><i class="fa fa-file-text"></i></h2>
             INBOX
             <span>{{ count }}</span>
         </div>
     </a>
     <a href="{% url 'messaging:message-create' %}">
-        <div class="submenu">
+        <div class="tile-button">
             <h2><i class="fa fa-file-o"></i></h2>
             NEW
         </div>
     </a>
     <a href="{% url 'messaging:sent-messages' %}">
-        <div class="submenu">
+        <div class="tile-button">
             <h2><i class="fa fa-files-o"></i></h2>
             SENT
         </div>
