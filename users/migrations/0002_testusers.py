@@ -2,7 +2,7 @@
 import os
 from django.conf import settings
 from django.db import migrations, models
-"""
+
 import django.db.models.deletion
 from django.utils import timezone
 from django.contrib.auth import get_user_model
@@ -30,4 +30,3 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(create_superuser),
     ]
-"""
