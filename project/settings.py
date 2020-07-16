@@ -25,7 +25,7 @@ SECRET_KEY = 'p-#3g$o^ghe3p60kun8%f#xp-rrwiinlqa&ju+o4z-jbhd2s&*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['qlma-tst.eba-2fw8398x.eu-central-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['example.com', 'qlma-tst.eba-2fw8398x.eu-central-1.elasticbeanstalk.com']
 
 
 # Application definition
