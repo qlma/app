@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'p-#3g$o^ghe3p60kun8%f#xp-rrwiinlqa&ju
 DEBUG = True
 #DEBUG = False
 
-ALLOWED_HOSTS = ['0.0.0.0', 'example.com', 'qlma.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '0.0.0.0', 'example.com', 'qlma.herokuapp.com']
 
 
 # Application definition
