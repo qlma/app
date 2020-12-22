@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,13 +21,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'p-#3g$o^ghe3p60kun8%f#xp-rrwiinlqa&ju+o4z-jbhd2s&*'
+SECRET_KEY = os.environ.get('SECRET_KEY') #'p-#3g$o^ghe3p60kun8%f#xp-rrwiinlqa&ju+o4z-jbhd2s&*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = ['example.com', 'qlma-tst.eba-2fw8398x.eu-central-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['example.com', 'qlma.herokuapp.com']
 
 
 # Application definition
@@ -83,28 +84,19 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-if 'RDS_HOSTNAME' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'], # qlmatst
-            'PASSWORD': os.environ['RDS_PASSWORD'], # qlmatst123
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB', ''),
+        'USER': os.environ.get('POSTGRES_USER', ''),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
+        'HOST': os.environ.get('POSTGRES_HOST', ''),
+        'PORT': 5432,
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',#os.environ.get('POSTGRES_DB', ''),
-            'USER': 'postgres',#os.environ.get('POSTGRES_USER', ''),
-            'PASSWORD': 'postgres',#os.environ.get('POSTGRES_PASSWORD', ''),
-            'HOST': 'db',
-            'PORT': 5432,
-        }
-    }
+}
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 
 
