@@ -21,13 +21,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY') #'p-#3g$o^ghe3p60kun8%f#xp-rrwiinlqa&ju+o4z-jbhd2s&*'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'p-#3g$o^ghe3p60kun8%f#xp-rrwiinlqa&ju+o4z-jbhd2s&*')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 #DEBUG = False
 
-ALLOWED_HOSTS = ['example.com', 'qlma.herokuapp.com']
+ALLOWED_HOSTS = ['0.0.0.0', 'example.com', 'qlma.herokuapp.com']
 
 
 # Application definition
@@ -88,16 +88,17 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB', ''),
-        'USER': os.environ.get('POSTGRES_USER', ''),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
-        'HOST': os.environ.get('POSTGRES_HOST', ''),
+        'NAME': os.environ.get('POSTGRES_DB', 'postgres'),
+        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'postgres'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'db'),
         'PORT': 5432,
     }
 }
 
 db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+if db_from_env:
+    DATABASES['default'].update(db_from_env)
 
 
 

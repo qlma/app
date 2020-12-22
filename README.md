@@ -1,4 +1,4 @@
-# Qlma - and the message gets delivered
+# Qlma
 
 Communication between school and home requires better services.
 
