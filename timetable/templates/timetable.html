@@ -1,4 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>{{ title }}</h1>
+    <h2>{{ current_group }}</h2>
+    <table border="0" width="100%">
+        <tr>
+            <td></td>
+            <td>Mon</td>
+            <td>Tue</td>
+            <td>Wed</td>
+            <td>Thu</td>
+            <td>Fri</td>
+        </tr>
+        <tr>
+            <td>
+                <table border="1" width="100%">
+                    {% for hour in hours %}
+                    <tr height="50">
+                        <td>{{ hour }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </td>
+            {% for lessons_weekday in lessons_weekdays %}
+            <td>
+                <table border="1" width="100%">
+                {% for lesson in lessons_weekday %}
+                    {% if lesson.starts_at %}
+                        <tr height="50"><td>{{ lesson.course_id }}<br>(Lesson id: {{ lesson.id }})</td></tr>
+                    {% else %}
+                        <tr height="50"><td></td></tr>
+                    {% endif %}
+
+                {% endfor %}
+                </table>
+            </td>
+            {% endfor %}
+        </tr>
+    </table>
+
 {% endblock content %}
