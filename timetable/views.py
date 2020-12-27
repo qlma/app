@@ -1,4 +1,5 @@
 import datetime
+from itertools import cycle
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.models import Group
@@ -10,7 +11,36 @@ from .models import Course, Subject, Lesson
 
 
 def timetable(request):
-    return render(request, 'timetable.html', {'title': 'Timetable'})
+    hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00']
+    username = request.user
+    user=CustomUser.objects.get(username=username)
+    groups = user.groups.all()
+    for group in groups:
+        current_group = group # TODO: Get this from user session when multiple exists
+
+    weekdays = [0,1,2,3,4]
+    lessons_weekdays = []
+    for weekday in weekdays:
+        lessons_weekday_results = Lesson.objects.filter(weekday=weekday, group_id=group.id)
+        lessons_weekday = []
+        if lessons_weekday_results:
+            for hour, lesson in zip(hours, cycle(lessons_weekday_results)):
+                if hour == lesson.starts_at.strftime("%H:%M"):
+                    lessons_weekday.append(lesson)
+                else:
+                    lessons_weekday.append("")
+        else:
+            lessons_weekday = ["", "", "", "", "", "", "", "", "", ""]
+        lessons_weekdays.append(lessons_weekday)
+
+    return render(request, 'timetable.html',
+        {
+            'title': 'Timetable',
+            'current_group': current_group,
+            'hours': hours,
+            'weekdays': weekdays,
+            'lessons_weekdays': lessons_weekdays
+        })
 
 def add_course(request):
     subjects=Subject.objects.all()
