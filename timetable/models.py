@@ -32,7 +32,7 @@ class Lesson(models.Model):
     id=models.AutoField(primary_key=True)
     group_id=models.ForeignKey(Group, on_delete=models.CASCADE)
     course_id=models.ForeignKey(Course, on_delete=models.CASCADE)
-    weekday=models.IntegerField()
+    weekday=models.IntegerField(blank=False, default=0)
     starts_at=models.TimeField()
     ends_at=models.TimeField()
     objects=models.Manager()
