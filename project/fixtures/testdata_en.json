@@ -815,7 +815,7 @@
       "fields":{
          "group_id":3,
          "course_id":5,
-         "weekday":"3",
+         "weekday":3,
          "starts_at":"08:15:00",
          "ends_at":"09:30:00"
       }
@@ -826,9 +826,108 @@
       "fields":{
          "group_id":2,
          "course_id":3,
-         "weekday":"2",
+         "weekday":2,
          "starts_at":"11:30:00",
          "ends_at":"12:30:00"
+      }
+   },
+   {
+      "model":"timetable.lesson",
+      "pk":3,
+      "fields":{
+         "group_id":1,
+         "course_id":3,
+         "weekday":0,
+         "starts_at":"08:00:00",
+         "ends_at":"09:00:00"
+      }
+   },
+   {
+      "model":"timetable.lesson",
+      "pk":4,
+      "fields":{
+         "group_id":4,
+         "course_id":3,
+         "weekday":0,
+         "starts_at":"08:00:00",
+         "ends_at":"09:00:00"
+      }
+   },
+   {
+      "model":"timetable.lesson",
+      "pk":5,
+      "fields":{
+         "group_id":4,
+         "course_id":2,
+         "weekday":0,
+         "starts_at":"09:00:00",
+         "ends_at":"10:00:00"
+      }
+   },
+   {
+      "model":"timetable.lesson",
+      "pk":6,
+      "fields":{
+         "group_id":4,
+         "course_id":1,
+         "weekday":0,
+         "starts_at":"10:00:00",
+         "ends_at":"11:00:00"
+      }
+   },
+   {
+      "model":"timetable.lesson",
+      "pk":7,
+      "fields":{
+         "group_id":4,
+         "course_id":2,
+         "weekday":1,
+         "starts_at":"10:00:00",
+         "ends_at":"11:00:00"
+      }
+   },
+   {
+      "model":"timetable.lesson",
+      "pk":8,
+      "fields":{
+         "group_id":4,
+         "course_id":3,
+         "weekday":1,
+         "starts_at":"13:00:00",
+         "ends_at":"14:00:00"
+      }
+   },
+   {
+      "model":"timetable.lesson",
+      "pk":8,
+      "fields":{
+         "group_id":4,
+         "course_id":3,
+         "weekday":2,
+         "starts_at":"09:00:00",
+         "ends_at":"10:00:00"
+      }
+   },
+   {
+      "model":"timetable.lesson",
+      "pk":9,
+      "fields":{
+         "group_id":4,
+         "course_id":3,
+         "weekday":3,
+         "starts_at":"15:00:00",
+         "ends_at":"16:00:00"
+      }
+   },
+   {
+      "model":"timetable.lesson",
+      "pk":10,
+      "fields":{
+         "group_id":4,
+         "course_id":4,
+         "weekday":4,
+         "starts_at":"10:00:00",
+         "ends_at":"11:00:00"
       }
    }
 ]
