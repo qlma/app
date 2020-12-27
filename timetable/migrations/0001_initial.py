@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, serialize=False)),
                 ('course_id', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='timetable.Course')),
                 ('group_id', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='auth.Group')),
-                ('weekday', models.CharField(max_length=1)),
+                ('weekday', models.PositiveIntegerField(null=True, blank=True)),
                 ('starts_at', models.TimeField()),
                 ('ends_at', models.TimeField()),
             ],
