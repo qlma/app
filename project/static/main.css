@@ -196,6 +196,17 @@ a.article-title:hover {
 
 /* messages - end */
 
+/* timetable - start */
+.timetable {
+  border: 1px solid #05a690;
+  border-color: #05a690;
+}
+.timetable td {
+  height: 50px;
+  padding: 4px;
+}
+/* timetable - end */
+
 /* autocomplete - start */
 
 .ui-autocomplete {
