@@ -21,12 +21,54 @@ from django.views.generic import (
 
 # Create your views here.
 
+def manage_events(request):
+    events=Event.objects.all()
+    return render(request,"manage_events.html", {"events":events})
+
+def event(request, event_id=None):
+    event = Event()
+    if event_id:
+        event = get_object_or_404(Event, pk=event_id)
+    else:
+        event = Event()
+    return render(request, 'event.html', {'event': event})
+
+def add_event(request):
+    if request.method == 'GET':
+        eventForm = EventForm()
+        return render(request, "add_event.html", {'eventForm' : eventForm})
+    if request.method == 'POST':
+        eventForm = EventForm(request.POST)
+        print(eventForm.errors)
+        if eventForm.is_valid():
+            eventForm.save()
+            messages.success(request,"Successfully added Event")
+            return HttpResponseRedirect(reverse("cal:manage_events"))
+        else:
+            messages.error(request,"Failed to add Event")
+            return HttpResponseRedirect(reverse("cal:add_event"))
+
+def edit_event(request,event_id):
+    if request.method == 'GET':
+        event=Event.objects.get(id=event_id)
+        return render(request,"edit_event.html", {"event":event})
+    if request.method == 'POST':
+        eventForm = EventForm(request.POST)
+        if eventForm.is_valid():
+            eventForm.save()
+            messages.success(request,"Successfully edited Event")
+            return HttpResponseRedirect(reverse("cal:edit_event", kwargs={"event_id":event_id}))
+        else:
+            messages.error(request,"Failed to edit Event")
+            return HttpResponseRedirect(reverse("cal:edit_event", kwargs={"event_id":event_id}))
+
+
 def index(request):
     return HttpResponse('hello')
 
 class CalendarView(ListView):
     model = Event
-    template_name = 'cal/calendar.html'
+    template_name = 'calendar.html'
     success_url = reverse_lazy("calendar")
 
     def get_context_data(self, **kwargs):
@@ -58,13 +100,6 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
-def event(request, event_id=None):
-    event = Event()
-    if event_id:
-        event = get_object_or_404(Event, pk=event_id)
-    else:
-        event = Event()
-    return render(request, 'cal/event.html', {'event': event})
 
 
 
@@ -122,11 +157,10 @@ def ical(request):
                 event_model.save()
 
             messages.success(request, f'Calendar data uploaded succesfully')
-            return render(request, 'cal/ical.html')
+            return render(request, 'ical.html')
         else:
             form = IcalForm()
 
-    return render(request, 'cal/ical.html')
-
+    return render(request, 'ical.html')
 
 

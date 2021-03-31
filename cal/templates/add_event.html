@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Add Event</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->           
+              <form role="form" action="{% url 'cal:add_event' %}" method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>Title </label>
+                    {{ eventForm.title }}
+                  </div>
+                  <div class="form-group">
+                    <label>Category </label>
+                    {{ eventForm.category }}
+                  </div>
+                  <div class="form-group">
+                    <label>Description </label>
+                    {{ eventForm.description }}
+                  </div>
+                  <div class="form-group">
+                    <label>Start time </label>
+                    {{ eventForm.start_time }}
+                  </div>
+                  <div class="form-group">
+                    <label>End time </label>
+                    {{ eventForm.end_time }}
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary btn-block">Add Event</button>
+                </div>
+              </form>
+
+            </div>
+            <!-- /.card -->
+
+          </div>
+          </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock content %}
