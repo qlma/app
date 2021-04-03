@@ -49,13 +49,18 @@ def add_event(request):
             return HttpResponseRedirect(reverse("cal:add_event"))
 
 def edit_event(request,event_id):
+    event=Event.objects.get(id=event_id)
     if request.method == 'GET':
-        event=Event.objects.get(id=event_id)
         return render(request,"edit_event.html", {"event":event})
     if request.method == 'POST':
         eventForm = EventForm(request.POST)
         if eventForm.is_valid():
-            eventForm.save()
+            event.title = eventForm.cleaned_data['title']
+            event.category = eventForm.cleaned_data['category']
+            event.description = eventForm.cleaned_data['description']
+            event.start_time = eventForm.cleaned_data['start_time']
+            event.end_time = eventForm.cleaned_data['end_time']
+            event.save()
             messages.success(request,"Successfully edited Event")
             return HttpResponseRedirect(reverse("cal:edit_event", kwargs={"event_id":event_id}))
         else:
