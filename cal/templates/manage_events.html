@@ -23,7 +23,8 @@
                       <th>Category</th>
                       <th>Start time</th>
                       <th>End time</th>
-                      <th>Action</th>
+                      <th>Actions</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -32,9 +33,10 @@
                       <td>{{ event.id }}</td>
                       <td>{{ event.category }}</td>
                       <td>{{ event.title }}</td>
-                      <td>{{ event.start_time }}</td>
-                      <td>{{ event.end_time }}</td>
+                      <td>{{ event.start_time|date:"d M Y" }}</td>
+                      <td>{{ event.end_time|date:"d M Y" }}</td>
                       <td><a href="/edit_event/{{ event.id }}" class="btn btn-success">Edit</a></td>
+                      <td><a href="/delete_event/{{ event.id }}" class="btn btn-success">Delete</a></td>
                     </tr>
                   {% endfor %}
                   </tbody>

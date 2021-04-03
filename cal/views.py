@@ -62,6 +62,12 @@ def edit_event(request,event_id):
             messages.error(request,"Failed to edit Event")
             return HttpResponseRedirect(reverse("cal:edit_event", kwargs={"event_id":event_id}))
 
+def delete_event(request,event_id):
+    if request.method == 'GET':
+        event=Event.objects.get(id=event_id)
+        event.delete()
+        messages.success(request,"Successfully deleted Event")
+        return HttpResponseRedirect(reverse("cal:manage_events"))
 
 def index(request):
     return HttpResponse('hello')
