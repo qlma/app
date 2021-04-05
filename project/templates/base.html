@@ -7,16 +7,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300" type="text/css">
 
+    <!-- Custom stylesheets -->
     <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'cal/css/styles.css' %}">
 
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300" rel="stylesheet" type="text/css">
-
+    <!-- Icons -->
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
@@ -98,78 +100,14 @@
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script type="application/javascript">
-      $(document).ready(function () {
-        // Hide multiselect field
-        $('#div_id_recipients').hide();
-        // Remove all values from multiselect field
-        $('#id_recipients').children().remove();
-        // Init suggestive search and retrieve list of items as JSON using search function
-        $("#suggestiveSearch").autocomplete({
-          source: "{% url 'messaging:search' %}",
-          minLength: 1,
-          delay: 200,
-          autoFocus: true,
-          select: function (event, ui) {
-            // Show the user what options are selected
-            $('#recipients_list').append('<span class="email-ids" id="' + ui.item.id + '">' + ui.item.label + '<span class="cancel-email">x</span></span>');
-            // Add selected option to multiselect field
-            $('#id_recipients').append('<option value="' + ui.item.id + '" selected>' + ui.item.label + '</option>');
-          },
-          close: function(event, ui)  {
-            // Close event fires when selection options closes
-            $('#suggestiveSearch')[0].value = ""; // Clear the input field 
-          }
-        });
-      });
-      // Remove selected recipient
-      $(document).on('click','.cancel-email',function(){
-        // Retrieve id of selected item
-        selected_to_cancel = $(this).parent().attr('id');
-        // Remove selected item from multiselect options
-        $("#id_recipients option[value='" + selected_to_cancel + "']").remove();
-        // Remove selected item from recipients list
-        $(this).parent().remove();
-      });
-    </script>
-
+    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous"></script>
 
-    <script type="application/javascript">
-      $('#picker_start_time').datetimepicker({
-        timepicker: true,
-        datepicker: true,
-        format: 'Y-m-d H:i',
-        weeks: true,
-        hours12: true,
-        step: 5,
-        disabledWeekDays: [5,6],
-        allowTimes: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
-        onShow: function(ct){
-          this.setOptions({
-            maxDate: $('#picker_end_time').val() ? $('#picker_end_time').val() : false
-          })
-        }
-      })
-      $('#picker_end_time').datetimepicker({
-        timepicker: true,
-        datepicker: true,
-        format: 'Y-m-d H:i',
-        weeks: true,
-        hours12: true,
-        step: 5,
-        disabledWeekDays: [5,6],
-        allowTimes: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
-        onShow: function(ct){
-          this.setOptions({
-            minDate: $('#picker_start_time').val() ? $('#picker_start_time').val() : false
-          })
-        }
-      });
-    </script>
+    <!-- Custom scripts -->
+    <script src="{% static 'suggestivesearch.js' %}" type="application/javascript"></script>
+    <script src="{% static 'datepicker.js' %}" type="application/javascript"></script>
 </body>
 </html>
