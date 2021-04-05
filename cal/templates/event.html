@@ -11,10 +11,10 @@ Event
 
 {% if event %}
   <h1>{{ event.title }}</h1>
-  <p>Start: {{ start_time }}</p>
-  <p>End: {{ end_time }}</p>
-  <p>Url: {{ event.url }}</p>
-  <p>{{ event.description }}</p>
+  <p>Start: {{ event.start_time|date:"Y-m-d H:i" }}</p>
+  <p>End: {{ event.end_time|date:"Y-m-d H:i" }}</p>
+  <p>Category: {{ event.category }}</p>
+  <p>Description: {{ event.description }}</p>
   
 {% endif %}
 

@@ -39,7 +39,6 @@ def add_event(request):
         return render(request, "add_event.html", {'eventForm' : eventForm})
     if request.method == 'POST':
         eventForm = EventForm(request.POST)
-        print(eventForm.errors)
         if eventForm.is_valid():
             eventForm.save()
             messages.success(request,"Successfully added Event")
@@ -51,7 +50,16 @@ def add_event(request):
 def edit_event(request,event_id):
     event=Event.objects.get(id=event_id)
     if request.method == 'GET':
-        return render(request,"edit_event.html", {"event":event})
+        eventForm = EventForm(
+            initial={
+                'title': event.title,
+                'category': event.category,
+                'description': event.description,
+                'start_time': event.start_time.strftime("%Y-%m-%d %H:%M"),
+                'end_time': event.end_time.strftime("%Y-%m-%d %H:%M"),
+            }
+        )
+        return render(request,"edit_event.html", {"event":event, "eventForm": eventForm})
     if request.method == 'POST':
         eventForm = EventForm(request.POST)
         if eventForm.is_valid():
