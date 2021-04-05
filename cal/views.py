@@ -9,6 +9,7 @@ from icalendar import Calendar
 import calendar
 
 from .models import Event
+from project.decorators import unacthenticated_user, allowed_user_types
 
 from .utils import TermCalendar
 from .forms import EventForm
@@ -33,6 +34,7 @@ def event(request, event_id=None):
         event = Event()
     return render(request, 'event.html', {'event': event})
 
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def add_event(request):
     if request.method == 'GET':
         eventForm = EventForm()
@@ -47,6 +49,7 @@ def add_event(request):
             messages.error(request,"Failed to add Event")
             return HttpResponseRedirect(reverse("cal:add_event"))
 
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def edit_event(request,event_id):
     event=Event.objects.get(id=event_id)
     if request.method == 'GET':
@@ -75,6 +78,7 @@ def edit_event(request,event_id):
             messages.error(request,"Failed to edit Event")
             return HttpResponseRedirect(reverse("cal:edit_event", kwargs={"event_id":event_id}))
 
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def delete_event(request,event_id):
     if request.method == 'GET':
         event=Event.objects.get(id=event_id)
