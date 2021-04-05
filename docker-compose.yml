@@ -23,6 +23,8 @@ services:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     environment:
+      - FACILITY_NAME=${FACILITY_NAME}
+      - FACILITY_LOCATION=${FACILITY_LOCATION}
       - ADMIN_USERNAME=${ADMIN_USERNAME}
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}

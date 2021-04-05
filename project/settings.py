@@ -62,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'project.context_processors.global_settings',
             ],
         },
     },
@@ -147,3 +148,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('SMTP_EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('SMTP_EMAIL_PASS')
+
+FACILITY_NAME = os.environ.get('FACILITY_NAME')
+FACILITY_LOCATION = os.environ.get('FACILITY_LOCATION')
