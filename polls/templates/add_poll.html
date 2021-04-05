@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Add Poll</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->           
+              <form role="form" action="{% url 'polls:add_poll' %}" method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary btn-block">Add Poll</button>
+                </div>
+              </form>
+
+            </div>
+            <!-- /.card -->
+
+          </div>
+          </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock content %}

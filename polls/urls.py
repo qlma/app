@@ -6,20 +6,14 @@ app_name = 'polls'
 
 urlpatterns = [
     
-    # ex: /polls/
-    #path('', views.index, name='index'),
     path('', views.IndexView.as_view(), name='index'),
-    
-    # ex: /polls/5/
-    #path('<int:question_id>/', views.detail, name='detail'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
-    
-    # ex: /polls/5/results/
-    #path('<int:question_id>/results/', views.results, name='results'),
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
-    
-    # ex: /polls/5/vote/
-    #path('<int:question_id>/vote/', views.vote, name='vote'),
     path('<int:question_id>/vote/', views.vote, name='vote'),
+
+    path('manage_polls/', views.ManagePollsView.as_view(), name='manage_polls'),
+    path('add_poll', views.add_poll, name="add_poll"),
+    path('edit_poll/<str:question_id>', views.edit_poll, name="edit_poll"),
+    path('delete_poll/<str:question_id>', views.delete_poll, name="delete_poll"),
     
 ]
