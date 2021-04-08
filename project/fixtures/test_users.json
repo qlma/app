@@ -1,0 +1,65 @@
+[
+    {
+        "model":"users.customuser",
+        "pk":2,
+        "fields":{
+           "password":"pbkdf2_sha256$260000$3mo8lO77KTwmLI7Qsv0ggP$Y8IM6jk35+c/mbwfAQdOeKZTECOTcHYz3YZ8HaGlX9c=",
+           "last_login":null,
+           "is_superuser":true,
+           "username":"testusername",
+           "first_name":"Test",
+           "last_name":"User",
+           "email":"test.user@qlma.fi",
+           "is_staff":false,
+           "is_active":true,
+           "date_joined":"2020-05-26T21:35:29.320Z",
+           "groups":[
+              4
+           ],
+           "user_permissions":[
+  
+           ],
+           "user_type": 2
+        }
+     },
+     {
+        "model":"auth.group",
+        "pk":1,
+        "fields":{
+           "name":"1A",
+           "permissions":[
+  
+           ]
+        }
+     },
+     {
+        "model":"auth.group",
+        "pk":2,
+        "fields":{
+           "name":"1B",
+           "permissions":[
+  
+           ]
+        }
+     },
+     {
+        "model":"auth.group",
+        "pk":3,
+        "fields":{
+           "name":"2A",
+           "permissions":[
+  
+           ]
+        }
+     },
+     {
+        "model":"auth.group",
+        "pk":4,
+        "fields":{
+           "name":"2B",
+           "permissions":[
+  
+           ]
+        }
+     }
+]

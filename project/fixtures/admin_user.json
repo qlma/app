@@ -1,0 +1,20 @@
+[
+    {
+        "model": "users.CustomUser", 
+        "pk": 1, 
+        "fields": {
+            "password": "pbkdf2_sha256$260000$pXJjF5UnvGalYIFF6GD4Je$V5IspJuPXX65kORtmmpIpCkAjk8eSW2pu8uFSwXJyi8=", 
+            "last_login": "2017-11-25T16:00:51.346Z", 
+            "is_superuser": true, 
+            "username": "admin", 
+            "first_name": "Boss", 
+            "last_name": "Man", 
+            "email": "boss.man@qlma.fi", 
+            "is_staff": true, 
+            "is_active": true, 
+            "date_joined": "2017-11-25T15:59:37.912Z", 
+            "groups": [], 
+            "user_permissions": []
+        }
+    }
+]

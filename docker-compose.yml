@@ -15,7 +15,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - postgres
+      - qlma_network
     restart: unless-stopped
 
   web:
@@ -40,8 +40,9 @@ services:
       - db
     links:
       - db:db
+      - selenium:selenium
     networks:
-      - postgres
+      - qlma_network
     restart: unless-stopped
 
   pgadmin:
@@ -56,11 +57,19 @@ services:
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
-      - postgres
+      - qlma_network
     restart: unless-stopped
 
+  selenium:
+    image: selenium/standalone-chrome-debug:3.7.1
+    ports:
+      - 4444:4444 # Selenium
+      - 5900:5900 # VNC server
+    networks:
+      - qlma_network
+
 networks:
-  postgres:
+  qlma_network:
 
 volumes:
     postgres_data:
