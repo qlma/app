@@ -1,8 +1,6 @@
 import socket
 from urllib.parse import urlparse
 
-from pyhtmlreport import Report
-
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings, tag
 
@@ -70,6 +68,9 @@ class UserTest(BaseTestCase):
     fixtures = ['test_users']
 
     def test_user_login(self):
+        """
+        As a test user with valid credentials, I should gain access to Qlma news page.
+        """
         self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
         username_input = self.selenium.find_element_by_name("username")
         username_input.send_keys('testusername')

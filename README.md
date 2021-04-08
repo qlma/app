@@ -16,7 +16,7 @@ docker exec -it web_container python manage.py loaddata testdata_en
 
 ### Run functional tests
 ```bash
-docker exec -it web_container python manage.py test --debug-mode
+docker exec -it web_container python manage.py test --debug-mode --verbosity 2
 ```
 
 ## Heroku
