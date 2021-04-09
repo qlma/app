@@ -8,6 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.keys import Keys
 
+import pytest
 
 @tag('selenium')
 @override_settings(ALLOWED_HOSTS=['*'])
@@ -16,23 +17,22 @@ class BaseTestCase(StaticLiveServerTestCase):
     Provides base test class which connects to the Docker
     container running selenium.
     """
+
+    fixtures = ['admin_user', 'test_users']
+
     host = '0.0.0.0'
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
 
+        
         # Set host to externally accessible web server address
         cls.host = socket.gethostbyname(socket.gethostname())
 
-        # Instantiate the remote WebDriver
         cls.selenium = webdriver.Remote(
-            #  Set to: htttp://{selenium-container-name}:port/wd/hub
-            #  In our example, the container is named `selenium`
-            #  and runs on port 4444
-            command_executor='http://selenium:4444/wd/hub',
-            # Set to CHROME since we are using the Chrome container
-            desired_capabilities=DesiredCapabilities.CHROME,
+            command_executor="http://selenium:4444/wd/hub",
+            desired_capabilities=DesiredCapabilities.CHROME
         )
 
         cls.selenium.implicitly_wait(5)
@@ -42,10 +42,6 @@ class BaseTestCase(StaticLiveServerTestCase):
         cls.selenium.quit()
         super().tearDownClass()
 
-
-class AdminTest(BaseTestCase):
-    # Update admin user in database
-    fixtures = ['admin_user']
 
     def test_admin_login(self):
         """
@@ -64,8 +60,6 @@ class AdminTest(BaseTestCase):
         body_text = self.selenium.find_element_by_tag_name('body').text
         self.assertIn('WELCOME, BOSS.', body_text)
 
-class UserTest(BaseTestCase):
-    fixtures = ['test_users']
 
     def test_user_login(self):
         """
@@ -84,3 +78,18 @@ class UserTest(BaseTestCase):
         body_text = self.selenium.find_element_by_tag_name('body').text
         self.assertIn('News', body_text)
 
+    def test_user_navigate_to_messages(self):
+        self.test_user_login()
+        """
+        As a test user, I navigate to Messages page.
+        """
+        h3_text = self.selenium.find_element_by_xpath('//*[@id="pageLinksRight"]/div/h3').text
+        self.assertIn('Quick links', h3_text)
+
+        self.selenium.find_element_by_xpath('//*[@id="pageLinksRight"]/div/ul/li/a[contains(@href, "/messages/")]').click()
+
+        body_text = self.selenium.find_element_by_tag_name('body').text
+        self.assertIn('Latest messages', body_text)
+
+        path = urlparse(self.selenium.current_url).path
+        self.assertEqual('/messages/', path)
