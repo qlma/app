@@ -40,7 +40,8 @@ services:
       - db
     links:
       - db:db
-      - selenium:selenium
+      - chrome:chrome
+      - firefox:firefox 
     networks:
       - qlma_network
     restart: unless-stopped
@@ -60,11 +61,41 @@ services:
       - qlma_network
     restart: unless-stopped
 
-  selenium:
-    image: selenium/standalone-chrome-debug:3.7.1
+  #https://github.com/SeleniumHQ/docker-selenium/blob/trunk/docker-compose-v3.yml
+  selenium-hub:
+    image: selenium/hub
     ports:
-      - 4444:4444 # Selenium
-      - 5900:5900 # VNC server
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+
+  chrome:
+    image: selenium/standalone-chrome-debug
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    ports:
+      - "6900:5900"
+    networks:
+      - qlma_network
+
+  firefox:
+    image: selenium/standalone-firefox-debug
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    ports:
+      - "6901:5900"
     networks:
       - qlma_network
 

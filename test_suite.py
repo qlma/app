@@ -1,3 +1,4 @@
+import os
 import socket
 from urllib.parse import urlparse
 
@@ -9,58 +10,6 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.keys import Keys
 
 import pytest
-
-
-@tag('admin')
-@override_settings(ALLOWED_HOSTS=['*'])
-class AdminBaseTestCase(StaticLiveServerTestCase):
-    fixtures = ['admin_user']
-    """
-    Provides base test class which connects to the Docker
-    container running selenium.
-    """
-
-    host = '0.0.0.0'
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        
-        # Set host to externally accessible web server address
-        cls.host = socket.gethostbyname(socket.gethostname())
-
-        cls.driver = webdriver.Remote(
-            command_executor="http://selenium:4444/wd/hub",
-            desired_capabilities=DesiredCapabilities.CHROME
-        )
-
-        cls.driver.implicitly_wait(5)
-
-    def setUp(self):
-        """
-        As a superuser with valid credentials, I should gain access to the Django admin.
-        """
-        self.driver.get('%s%s' % (self.live_server_url, '/admin/'))
-        username_input = self.driver.find_element_by_name('username')
-        username_input.send_keys('admin')
-        password_input = self.driver.find_element_by_name('password')
-        password_input.send_keys('admin')
-        self.driver.find_element_by_xpath('//input[@value="Log in"]').click()
-
-        path = urlparse(self.driver.current_url).path
-        self.assertEqual('/admin/', path)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        super().tearDownClass()
-
-class AdminTestCase(AdminBaseTestCase):
-    def test_admin_name(self):
-        body_text = self.driver.find_element_by_tag_name('body').text
-        self.assertIn('WELCOME, BOSS.', body_text) 
-
-
 
 
 @tag('user')
@@ -81,12 +30,17 @@ class UserBaseTestCase(StaticLiveServerTestCase):
         # Set host to externally accessible web server address
         cls.host = socket.gethostbyname(socket.gethostname())
 
+        # Chrome
         cls.driver = webdriver.Remote(
-            command_executor="http://selenium:4444/wd/hub",
+            command_executor="http://chrome:4444/wd/hub",
             desired_capabilities=DesiredCapabilities.CHROME
         )
 
-        cls.driver.implicitly_wait(5)
+        # Firefox
+        #cls.driver = webdriver.Remote(
+        #    command_executor="http://firefox:4444/wd/hub",
+        #    desired_capabilities=DesiredCapabilities.FIREFOX
+        #)
 
     def setUp(self):
         """
@@ -102,13 +56,6 @@ class UserBaseTestCase(StaticLiveServerTestCase):
         path = urlparse(self.driver.current_url).path
         self.assertEqual('/news', path)
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        super().tearDownClass()
-
-
-class UserTestCase(UserBaseTestCase):
     def test_user_news_page_title(self):
         """
         As a test user, I navigate to News page.
@@ -137,7 +84,7 @@ class UserTestCase(UserBaseTestCase):
         self.assertEqual('/messages/', path)
 
 
-
-
-
-
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+        super().tearDownClass()
