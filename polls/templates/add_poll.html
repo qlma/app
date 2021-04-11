@@ -11,6 +11,7 @@
               <div class="card-header">
                 <h3 class="card-title">Add Poll</h3>
               </div>
+
               <!-- /.card-header -->
               <!-- form start -->           
               <form role="form" action="{% url 'polls:add_poll' %}" method="post">
@@ -21,12 +22,16 @@
                     <input type="text" class="form-control" name="question_text" value="" />
                   </div>
 
-                  {% for choice_id in choices %}
-                  <div class="form-group">
-                    <label>Choice {{ forloop.counter }}</label>
-                    <input type="text" class="form-control" name="choice{{ choice_id }}" value="" />
+                  <div id="form_choices">
+                    <div class="form-group">
+                      <label>Choice 1</label>
+                      <input type="text" class="form-control" name="choice_1" value="" />
+                    </div>
                   </div>
-                  {% endfor %}
+
+                  <div class="form-group">
+                    <button type="button" id="add-another" class="btn btn-secondary btn-block">Add Choice</button>
+                  </div>
                 </div>
 
                 <div class="card-footer">
