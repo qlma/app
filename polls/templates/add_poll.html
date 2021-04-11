@@ -17,8 +17,16 @@
                 {% csrf_token %}
                 <div class="card-body">
                   <div class="form-group">
-                    {{ pollForm|crispy }}
+                    <label>Question</label>
+                    <input type="text" class="form-control" name="question_text" value="" />
                   </div>
+
+                  {% for choice_id in choices %}
+                  <div class="form-group">
+                    <label>Choice {{ forloop.counter }}</label>
+                    <input type="text" class="form-control" name="choice{{ choice_id }}" value="" />
+                  </div>
+                  {% endfor %}
                 </div>
 
                 <div class="card-footer">
