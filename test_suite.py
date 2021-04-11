@@ -30,24 +30,23 @@ class UserBaseTestCase(StaticLiveServerTestCase):
         # Set host to externally accessible web server address
         cls.host = socket.gethostbyname(socket.gethostname())
 
-        # Chrome
-        #host = "chrome"
         host = "selenium-hub"
+
+        # Chrome
         desired_capabilities = DesiredCapabilities.CHROME.copy()
-        #desired_capabilities['platform'] = 'Linux'
-        #desired_capabilities['browser_version'] = 63
-        #desired_capabilities['chrome_driver'] = "78.0"
+        desired_capabilities['platform'] = 'Linux'
+        desired_capabilities['browser_version'] = 89
+        desired_capabilities['chrome_driver'] = 89
 
         # Firefox
-        #host = "firefox"
         #desired_capabilities=DesiredCapabilities.FIREFOX.copy()
-        
 
         cls.driver = webdriver.Remote(
             command_executor=f"http://{host}:4444/wd/hub",
             desired_capabilities=desired_capabilities
         )
-        #cls.driver.implicitly_wait(30)
+        cls.driver.maximize_window()
+        #cls.driver.implicitly_wait(5)
 
     def setUp(self):
         """
