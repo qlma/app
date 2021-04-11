@@ -55,7 +55,7 @@ class ManagePollsView(generic.ListView):
 def add_poll(request):
     if request.method == 'GET':
         pollForm = PollForm()
-        return render(request, "add_poll.html", {'pollForm' : pollForm, 'choices': [1] }) # Note! hardcoded 3 choices
+        return render(request, "add_poll.html", {'pollForm' : pollForm })
     if request.method == 'POST':
         pollForm = PollForm(request.POST)
         if pollForm.is_valid():
