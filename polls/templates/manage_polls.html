@@ -22,13 +22,13 @@
                                     <th>Actions</th>
                                     <th></th>
                                 </tr>
-                                <tr>
                                 {% for question in latest_question_list %}
+                                <tr>
                                     <td><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></td>
                                     <td><a href="{% url 'polls:edit_poll' question.id %}" class="btn btn-success">Edit</a></td>
                                     <td><a href="{% url 'polls:delete_poll' question.id %}" class="btn btn-success">Delete</a></td>
-                                {% endfor %}
                                 </tr>
+                                {% endfor %}
                             </table>
                         {% else %}
                             <p>No polls are available.</p>

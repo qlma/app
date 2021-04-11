@@ -78,9 +78,8 @@ def edit_poll(request, question_id):
         return render(request, 'edit_poll.html', {'question': question, 'pollForm': pollForm})
     if request.method == 'POST':
         pollForm = PollForm(request.POST)
-        print(pollForm.errors)
         if pollForm.is_valid():
-            question.title = pollForm.cleaned_data['question_text']
+            question.question_text = pollForm.cleaned_data['question_text']
             question.save()
             messages.success(request,"Successfully edited Poll")
             return HttpResponseRedirect(reverse("polls:edit_poll", kwargs={"question_id":question_id}))
@@ -91,7 +90,7 @@ def edit_poll(request, question_id):
 @allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def delete_poll(request, question_id):
     if request.method == 'GET':
-        question=Event.objects.get(id=question_id)
+        question=Question.objects.get(id=question_id)
         question.delete()
         messages.success(request,"Successfully deleted question")
         return HttpResponseRedirect(reverse("polls:manage_polls"))
