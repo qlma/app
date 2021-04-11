@@ -32,21 +32,17 @@ class UserBaseTestCase(StaticLiveServerTestCase):
 
         host = "selenium-hub"
 
-        # Chrome
-        desired_capabilities = DesiredCapabilities.CHROME.copy()
-        desired_capabilities['platform'] = 'Linux'
-        desired_capabilities['browser_version'] = 89
-        desired_capabilities['chrome_driver'] = 89
+        desired_capabilities_list = []
+        desired_capabilities_list.append({'browserName': 'chrome', 'version': '', 'platform': 'Linux', 'browser_version': 89, 'chrome_driver': 89, })
+        desired_capabilities_list.append({'browserName': 'firefox', 'marionette': True, 'acceptInsecureCerts': True })
 
-        # Firefox
-        #desired_capabilities=DesiredCapabilities.FIREFOX.copy()
-
-        cls.driver = webdriver.Remote(
-            command_executor=f"http://{host}:4444/wd/hub",
-            desired_capabilities=desired_capabilities
-        )
-        cls.driver.maximize_window()
-        #cls.driver.implicitly_wait(5)
+        for desired_capabilities in desired_capabilities_list:
+            print(desired_capabilities)
+            cls.driver = webdriver.Remote(
+                command_executor=f"http://{host}:4444/wd/hub",
+                desired_capabilities=desired_capabilities
+            )
+            cls.driver.maximize_window()
 
     def setUp(self):
         """
