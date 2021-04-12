@@ -5,7 +5,7 @@ from django.contrib import messages
 from users.models import CustomUser
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, GroupForm
 from project.decorators import unacthenticated_user, allowed_user_types
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -137,10 +137,34 @@ def manage_groups(request):
     return render(request,"admin/manage_groups.html", { "users_without_group": users_without_group, "groups": groups })
 
 @allowed_user_types(allowed_roles=['Teacher', 'Admin'])
-def manage_group(request, group_id):
+def add_group(request):
+    if request.method == 'GET':
+        return render(request,"admin/add_group.html")
+    if request.method == 'POST':
+        groupForm = GroupForm(request.POST)
+        if groupForm.is_valid():
+            group = Group()
+            group.name = groupForm.cleaned_data['name']
+            group.save()
+
+            messages.success(request,"Successfully added group")
+            return HttpResponseRedirect(reverse("manage_groups"))
+        else:
+            messages.error(request,"Failed to add Group")
+            return HttpResponseRedirect(reverse("add_group"))
+
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
+def edit_group(request, group_id):
     group = get_object_or_404(Group, id=group_id)
     users = CustomUser.objects.filter(groups__name=group.name)
-    return render(request,"admin/manage_group.html", { "group": group, "users": users })
+    return render(request,"admin/edit_group.html", { "group": group, "users": users })
+
+@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
+def delete_group(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    group.delete()
+    messages.success(request,"Successfully deleted group")
+    return HttpResponseRedirect(reverse("manage_groups"))
 
 def groups(request):
     groups=Group.objects.all()

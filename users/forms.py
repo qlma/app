@@ -1,6 +1,7 @@
 from django import forms
 from users.models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import Group
 from .models import Profile
 from users.models import CustomUser
 from django.forms import ModelChoiceField
@@ -24,3 +25,7 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['image', 'address']
 
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['name']

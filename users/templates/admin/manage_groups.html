@@ -4,6 +4,9 @@
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
+
+      <a href="{% url 'add_group' %}" class="btn btn-success">Add group</a><br/><br/>
+
       {% if users_without_group %}
       <div class="row">
         <div class="col-12">
@@ -46,7 +49,10 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Group <a href="{% url 'manage_group' group.id %}">{{ group.name }}</a></h3>
+              <h3 class="card-title">
+                Group <a href="{% url 'edit_group' group.id %}">{{ group.name }}</a>
+                <a href="{% url 'delete_group' group.id %}" class="btn btn-success pull-right">Delete</a>
+              </h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
