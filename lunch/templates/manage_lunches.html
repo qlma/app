@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+
+        <a href="{% url 'lunch:add_lunch' %}" class="btn btn-success">Add lunch</a><br/><br/>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Lunches</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Date</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Created at</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for lunch in lunches %}
+                    <tr>
+                      <td>{{ lunch.id }}</td>
+                      <td>{{ lunch.date }}</td>
+                      <td>{{ lunch.title }}</td>
+                      <td>{{ lunch.description }}</td>
+                      <td>{{ lunch.created_at }}</td>
+                      <td>
+                        <a href="{% url 'lunch:edit_lunch' lunch.id %}" class="btn btn-success">Edit</a>
+                        <a href="{% url 'lunch:delete_lunch' lunch.id %}" class="btn btn-success">Delete</a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock content %}

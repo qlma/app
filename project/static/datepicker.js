@@ -29,3 +29,12 @@ $('#picker_end_time').datetimepicker({
         })
     }
 });
+
+$('#picker_date').datetimepicker({
+    timepicker: false,
+    datepicker: true,
+    format: 'Y-m-d',
+    weeks: true,
+    step: 5,
+    disabledWeekDays: [5,6]
+});

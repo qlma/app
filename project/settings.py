@@ -23,11 +23,12 @@ ALLOWED_HOSTS = ['localhost', '0.0.0.0', 'example.com', 'qlma.herokuapp.com']
 INSTALLED_APPS = [
     'cal.apps.CalConfig',
     'project.apps.ProjectConfig',
-    'polls.apps.PollsConfig',
     'users.apps.UsersConfig',
     'news.apps.NewsConfig',
     'messaging.apps.MessagingConfig',
     'timetable.apps.TimetableConfig',
+    'polls.apps.PollsConfig',
+    'lunch.apps.LunchConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

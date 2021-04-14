@@ -32,8 +32,7 @@ admin.site.index_title = "Welcome to Qlma Admin Portal"
 app_name = 'project'
 
 urlpatterns = [
-    
-    path('polls/', include('polls.urls')),
+
     path('admin/', admin.site.urls),
     
     path('', redirect_login, name='index'),
@@ -68,6 +67,8 @@ urlpatterns = [
     path('', include('cal.urls')),
     path('', include('users.urls')),
     path('', include('timetable.urls')),
+    path('polls/', include('polls.urls')),
+    path('lunch/', include('lunch.urls')),
 
     path('staff/', views.staff, name='staff'),
 
