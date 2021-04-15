@@ -14,8 +14,25 @@ class LunchForm(forms.ModelForm):
             }
         )
     )
-    title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tasty tacos'}))
-    description = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':20, 'class': 'form-control', 'placeholder': 'Lunch consists of the following ingredients.'}))
+    title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Tasty tacos'
+            }
+        )
+    )
+    description = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'rows':5,
+                'cols':20,
+                'id': 'summernote',
+                'class': 'form-control',
+                'placeholder': 'Lunch consists of the following ingredients.'
+            }
+        )
+    )
 
     class Meta:
         model = Lunch

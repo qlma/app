@@ -7,7 +7,7 @@
     <b>Title:</b>
     <p>{{ lunch.title }}</p>
     <b>Description:</b>
-    <p>{{ lunch.description }}</p>
+    <p>{{ lunch.description|safe }}</p>
     <b>Created:</b>
     <p>{{ lunch.created_at|date:"Y-m-d H:i" }}</p>
     <b>Updated:</b>

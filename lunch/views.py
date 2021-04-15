@@ -21,7 +21,7 @@ def index(request):
     lunches = Lunch.objects.all()
     return render(request, 'lunches.html',
         {
-            'title': 'Lunch menu',
+            'title': 'Lunches',
             'lunches': lunches
         })
 
@@ -57,6 +57,7 @@ def edit_lunch(request,lunch_id):
     if request.method=="GET":
         lunchForm = LunchForm(
             initial={
+                'date': lunch.date,
                 'title': lunch.title,
                 'description': lunch.description
             }
