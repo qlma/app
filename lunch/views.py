@@ -86,3 +86,9 @@ def delete_lunch(request,lunch_id):
         lunch.delete()
         messages.success(request,"Successfully deleted Lunch")
         return HttpResponseRedirect(reverse("lunch:manage_lunches"))
+
+def detail(request,lunch_id):
+    lunch=Lunch.objects.get(id=lunch_id)
+    if request.method=="GET":
+        return render(request,"lunch.html", {"lunch": lunch})
+    return HttpResponseRedirect(reverse("lunch:details", kwargs={"lunch_id":lunch_id}))

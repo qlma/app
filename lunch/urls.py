@@ -16,5 +16,6 @@ urlpatterns = [
     path('add_lunch', views.add_lunch, name="add_lunch"),
     path('edit_lunch/<str:lunch_id>', views.edit_lunch, name="edit_lunch"),
     path('delete_lunch/<str:lunch_id>', views.delete_lunch, name="delete_lunch"),
+    path('detail/<str:lunch_id>', views.detail, name="detail"),
 
 ]
