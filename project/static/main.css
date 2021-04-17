@@ -184,14 +184,28 @@ a.article-title:hover {
 	clear: both;
 }
 
+.message-actions {
+
+}
+
 .message-unread {
+  display: inline-block;
   color: red;
-  float: right;
 }
 
 .message-read {
+  display: inline-block;
   color: green;
-  float: right;
+}
+
+.message-reply {
+  display: inline-block;
+  padding-right: 2px; 
+}
+
+.message-delete {
+  display: inline-block;
+  padding-right: 2px; 
 }
 
 /* messages - end */

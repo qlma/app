@@ -12,11 +12,20 @@
                   <!--<img class="rounded-circle article-img" src="{{ message.sender.profile.image.url }}">-->
                   <div class="media-body">
                     <div class="article-metadata">
+                      
                       Recipient(s): 
                       {% for recipient in message.recipients.all %}
                         <a class="mr-2" href="{% url 'user' recipient %}">{{ recipient }}</a>,
                       {% endfor %}
                       <small class="text-muted">{{ message.date_posted|date:"F d, Y h:m" }}</small>
+
+                      <div class="pull-right message-actions">
+                        <div class="message-delete">                           
+                            <a href="{% url 'messaging:message-delete' message.id %}">
+                                <i class="fa fa-trash">Delete</i>
+                            </a>
+                        </div>
+                      </div>
                     </div>
                     <h2><a class="article-title" href="{% url 'messaging:message-detail' message.id %}">{{ message.title }}</a></h2>
                   </div>

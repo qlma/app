@@ -3,11 +3,13 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Q
 from django.contrib import messages
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
+    DeleteView,
 )
 from users.models import CustomUser
 from .models import Message
@@ -56,6 +58,21 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
         form.instance.sender = self.request.user
         return super().form_valid(form)
 
+class MessageReplyView(LoginRequiredMixin, CreateView):
+    model = Message
+    fields = ['recipients', 'title', 'content']
+
+    def form_valid(self, form):
+        form.instance.sender = self.request.user
+        return super().form_valid(form)
+
+class MessageDeleteView(LoginRequiredMixin, DeleteView):
+    model = Message
+    success_message = "Message deleted successfully"
+    success_url = reverse_lazy('messaging:messaging')
+    
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
 
 def search(request):
     if request.is_ajax():
@@ -76,3 +93,5 @@ def get_recipient_list(users):
         option = { 'id': user.id, 'label': user.first_name + ' ' +  user.last_name + ' (' + user.username + ')' }
         result.append(option)
     return json.dumps(result)
+
+        

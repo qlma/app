@@ -4,8 +4,8 @@ from .views import (
     MessageSentListView,
     MessageDetailView,
     MessageCreateView,
-#    PostUpdateView,
-#    PostDeleteView,
+    MessageReplyView,
+    MessageDeleteView,
 )
 from . import views
 
@@ -15,6 +15,8 @@ urlpatterns = [
     path('messages/', MessageListView.as_view(), name='messaging'),
     path('messages/sent/', MessageSentListView.as_view(), name='sent-messages'),
     path('message/<int:pk>/', MessageDetailView.as_view(), name='message-detail'),
+    path('message/<int:pk>/reply/', MessageReplyView.as_view(), name='message-reply'),
+    path('message/<int:pk>/delete/', MessageDeleteView.as_view(), name='message-delete'),
     path('message/new/', MessageCreateView.as_view(), name='message-create'),
 
     path('search/', views.search, name='search')

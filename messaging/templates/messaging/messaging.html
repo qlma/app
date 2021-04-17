@@ -14,12 +14,24 @@
                     <div class="article-metadata">
                         Sender: <a class="mr-2" href="{% url 'user' message.sender %}">{{ message.sender }}</a>
                         <small class="text-muted">{{ message.date_posted|date:"F d, Y h:m" }}</small>
-
-                        {% if message.is_read == False %}
-                            <div class="message-unread">Unread</div>
-                        {% else %}
-                            <div class="message-read">Read</div>
-                        {% endif %}
+                        <div class="pull-right message-actions">
+                            {% if message.is_read == False %}
+                                <div class="message-unread">Unread</div>
+                            {% else %}
+                                <div class="message-read">Read</div>
+                            {% endif %}
+                            
+                            <div class="message-reply">                           
+                                <a href="{% url 'messaging:message-reply' message.id %}">
+                                    <i class="fa fa-reply">Reply</i>
+                                </a>
+                            </div>
+                            <div class="message-delete">                           
+                                <a href="{% url 'messaging:message-delete' message.id %}">
+                                    <i class="fa fa-trash">Delete</i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <h2><a class="article-title" href="{% url 'messaging:message-detail' message.id %}">{{ message.title }}</a></h2>
                     </div>
