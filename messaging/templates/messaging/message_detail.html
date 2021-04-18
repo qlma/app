@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
   <article class="media content-section">
-    <img class="rounded-circle article-img" src="{{ object.sender.profile.image.url }}">
+    <img class="rounded-circle article-img" src="{{ message.sender.profile.image.url }}">
     <div class="media-body">
       <div class="article-metadata">
         Recipient(s): 
-        {% for recipient in object.recipients.all %}
+        {% for recipient in message.recipients.all %}
           <a class="mr-2" href="#">{{ recipient }}</a>,
         {% endfor %}
-        <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+        <small class="text-muted">{{ message.date_posted|date:"F d, Y" }}</small>
 
         <div class="pull-right message-actions">
           {% if message.is_read == False %}
@@ -29,8 +29,8 @@
           </div>
       </div>
       </div>
-      <h2 class="article-title">{{ object.title }}</h2>
-      <p class="article-content">{{ object.content }}</p>
+      <h2 class="article-title">{{ message.title }}</h2>
+      <p class="article-content">{{ message.content|safe }}</p>
     </div>
   </article>
 {% endblock content %}

@@ -13,10 +13,11 @@ from django.views.generic import (
 )
 from users.models import CustomUser
 from .models import Message
+from .forms import MessageForm
 
 class MessageListView(LoginRequiredMixin, ListView):
     model = Message
-    template_name = 'messaging/messaging.html'
+    template_name = 'messaging/messages_received.html'
     context_object_name = 'messaging'
     ordering = ['-date_posted']
     paginate_by = 5
@@ -33,7 +34,7 @@ class MessageListView(LoginRequiredMixin, ListView):
 
 class MessageSentListView(LoginRequiredMixin, ListView):
     model = Message
-    template_name = 'messaging/sent_messages.html'
+    template_name = 'messaging/messages_sent.html'
     context_object_name = 'messaging'
     paginate_by = 5
 
@@ -45,14 +46,19 @@ class MessageDetailView(LoginRequiredMixin, DetailView):
     model = Message
 
     def get_object(self):
-        obj = super().get_object()
-        obj.is_read = True
-        obj.save()
-        return obj
+        message = super().get_object()
+        message.is_read = True
+        message.save()
+        return message
 
 class MessageCreateView(LoginRequiredMixin, CreateView):
+
     model = Message
     fields = ['recipients', 'title', 'content']
+
+    def get(self, request, *args, **kwargs):
+        context = {'messageForm': MessageForm()}
+        return render(request, 'messaging/message_form.html', context)
 
     def form_valid(self, form):
         form.instance.sender = self.request.user
@@ -60,19 +66,23 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
 
 class MessageReplyView(LoginRequiredMixin, CreateView):
     model = Message
+    form_class = MessageForm
     fields = ['recipients', 'title', 'content']
 
-    def form_valid(self, form):
-        form.instance.sender = self.request.user
-        return super().form_valid(form)
+    def get(self, request, pk, *args, **kwargs):
+        message = get_object_or_404(Message, pk=pk)
+        initial_dict = {
+        #    'recipients': [(c.pk, c.username) for c in CustomUser.objects.filter(username=message.sender)],
+        #    'title': 'Reply: ' + message.title
+        }
+        messageForm = MessageForm(initial = initial_dict)
+        context = {}
+        context['messageForm'] = messageForm
+        return render(request, 'messaging/message_form.html', context)
 
 class MessageDeleteView(LoginRequiredMixin, DeleteView):
     model = Message
-    success_message = "Message deleted successfully"
-    success_url = reverse_lazy('messaging:messaging')
-    
-    def get(self, request, *args, **kwargs):
-        return self.delete(request, *args, **kwargs)
+    success_url = reverse_lazy('messaging:messages-received')
 
 def search(request):
     if request.is_ajax():

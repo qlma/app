@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-    {% include "./messaging_navi.html" %}
+    {% include "./messages_navi.html" %}
 
     <div class="panel panel-default">
         <div class="panel-heading"><h3>New message</h3></div>
@@ -15,10 +15,10 @@
                     Recipient(s):
                     <input class="form-control" type="text" id="suggestiveSearch" autofocus />
                     <div id="recipients_list"></div>
-                    {{ form.recipients|as_crispy_field }}
+                    {{ messageForm.recipients|as_crispy_field }}
 
-                    {{ form.title|as_crispy_field }}
-                    {{ form.content|as_crispy_field }}
+                    {{ messageForm.title|as_crispy_field }}
+                    {{ messageForm.content|as_crispy_field }}
 
                     <div class="form-group">
                         <button class="btn btn-outline-info" type="submit">Send</button>
