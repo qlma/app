@@ -80,7 +80,13 @@ def add_user_save(request):
         address=request.POST.get("address")
 
         try:
-            user=CustomUser.objects.create_user(username=username,password=password,first_name=first_name,last_name=last_name,email=email,address=address)
+            user=CustomUser.objects.create_user(
+                username=username,
+                password=password,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                address=address)
             user.save()
             messages.success(request,"Successfully Added User")
             return HttpResponseRedirect(reverse("add_user"))

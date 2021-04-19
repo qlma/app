@@ -7,20 +7,28 @@ from users.models import CustomUser
 from django.forms import ModelChoiceField
 
 class UserRegisterForm(UserCreationForm):
+
+    first_name = forms.CharField()
+    last_name = forms.CharField()
     email = forms.EmailField()
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
 
 class UserUpdateForm(forms.ModelForm):
+    first_name = forms.CharField()
+    last_name = forms.CharField()
     email = forms.EmailField()
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email']
 
 class ProfileUpdateForm(forms.ModelForm):
+
+    address = forms.CharField(max_length=150, required=False)
+
     class Meta:
         model = Profile
         fields = ['image', 'address']

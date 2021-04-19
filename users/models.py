@@ -7,6 +7,7 @@ from PIL import Image
 
 
 class CustomUser(AbstractUser):
+
     USER_TYPES = (
         ('1', 'Student'),
         ('2', 'Teacher'),
@@ -15,10 +16,15 @@ class CustomUser(AbstractUser):
     )
     user_type = models.CharField(choices=USER_TYPES, default=1, max_length=1)
 
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
+
+    def __str__(self):
+        return self.username
+
 class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    address=models.CharField(max_length=150)
+    address = models.CharField(max_length=150)
 
     def __str__(self):
         return self.user.username
