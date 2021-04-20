@@ -3,7 +3,7 @@
         <div class="tile-button selected">
             <h2><i class="fa fa-file-text"></i></h2>
             INBOX
-            <span>{{ count }}</span>
+            <span>{{ unread_messages_count }}</span>
         </div>
     </a>
     <a href="{% url 'messaging:message-create' %}">
@@ -16,6 +16,12 @@
         <div class="tile-button">
             <h2><i class="fa fa-files-o"></i></h2>
             SENT
+        </div>
+    </a>
+    <a href="{% url 'messaging:messages-archived' %}">
+        <div class="tile-button">
+            <h2><i class="fa fa-files-o"></i></h2>
+            Archived
         </div>
     </a>
 </div>

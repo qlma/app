@@ -26,10 +26,11 @@
                                     <i class="fa fa-reply">Reply</i>
                                 </a>
                             </div>
-                            <div class="message-delete">                           
-                                <a href="{% url 'messaging:message-delete' message.id %}">
-                                    <i class="fa fa-trash">Delete</i>
-                                </a>
+                            <div class="message-archive">
+                                <form name="archiveForm" action="{% url 'messaging:message-archive' message.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn btn-link btn-block p-0" type="submit"><i class="fa fa-archive">Archive</i></button>
+                                </form>
                             </div>
                         </div>
                     </div>

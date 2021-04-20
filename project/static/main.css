@@ -83,8 +83,6 @@ a.article-title:hover {
 }
 
 .article-metadata {
-  padding-bottom: 1px;
-  margin-bottom: 4px;
   border-bottom: 1px solid #e3e3e3
 }
 
@@ -198,14 +196,12 @@ a.article-title:hover {
   color: green;
 }
 
-.message-reply {
+.message-reply,
+.message-delete,
+.message-archive,
+.message-archived {
   display: inline-block;
-  padding-right: 2px; 
-}
-
-.message-delete {
-  display: inline-block;
-  padding-right: 2px; 
+  padding-right: 2px;
 }
 
 /* messages - end */
