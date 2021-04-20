@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    {% include "./messages_navi.html" %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>New message</h3></div>
+        <div class="panel-content">   
+
+            <div class="content-section">
+                <form method="POST">
+                    {% csrf_token %}
+
+                    Recipient(s):
+                    <input class="form-control" type="text" id="suggestiveSearch" autofocus />
+                    <div id="recipients_list"></div>
+                    {{ messageForm.recipients|as_crispy_field }}
+
+                    {{ messageForm.title|as_crispy_field }}
+                    {{ messageForm.content|as_crispy_field }}
+
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+{% endblock content %}
