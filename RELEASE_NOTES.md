@@ -12,4 +12,6 @@ Initial MVP release
 - Messages navi is now shown in all messaging pages.
 - Unread messages count is shown on all messaging pages.
 - New message content field has a wysiwyg editor now. 
+- Messaging navi highlights last selected item
+
 
