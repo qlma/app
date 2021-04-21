@@ -12,6 +12,7 @@ Initial MVP release
 - Messages navi is now shown in all messaging pages.
 - Unread messages count is shown on all messaging pages.
 - New message content field has a wysiwyg editor now. 
-- Messaging navi highlights last selected item
+- Storing messaging-navi state and highlighting selected item
+- Registered user is now sent a confirmation email with a token. Link in the email points to confirmation URL. User is activated and logged in after confirmation. Requires env vars SMTP_EMAIL_USER & SMTP_EMAIL_PASS.
 
 

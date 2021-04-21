@@ -151,6 +151,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('SMTP_EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('SMTP_EMAIL_PASS')
+DEFAULT_FROM_EMAIL = 'Qlma Admin <' + os.environ.get('ADMIN_EMAIL') + '>'
 
 FACILITY_NAME = os.environ.get('FACILITY_NAME')
 FACILITY_ADDRESS = os.environ.get('FACILITY_ADDRESS')

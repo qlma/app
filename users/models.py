@@ -25,6 +25,7 @@ class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     address = models.CharField(max_length=150)
+    email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

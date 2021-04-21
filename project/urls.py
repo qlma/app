@@ -1,18 +1,3 @@
-"""project URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('news/', include('news.urls'))
-"""
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
@@ -22,8 +7,6 @@ from users import views as user_views
 
 from . import views
 from .views import redirect_login
-
-
 
 admin.site.site_header = "Qlma Admin Portal"
 admin.site.site_title = "Qlma Admin Portal"
@@ -36,7 +19,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('', redirect_login, name='index'),
-    path('register/', user_views.register, name='register'),
+    path('register/', user_views.RegisterView.as_view(template_name='users/register.html'), name='register'),
+    path('activate/<uidb64>/<token>/', user_views.ActivateAccount.as_view(), name='activate'),
     path('profile/', user_views.profile, name='profile'),
     path('user/<str:username>/', user_views.user, name='user'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),

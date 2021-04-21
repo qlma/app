@@ -3,11 +3,8 @@ from django.dispatch import receiver
 from .models import Profile
 from users.models import CustomUser
 
-@receiver(post_save,sender=CustomUser)
-def create_user_profile(sender,instance,created,**kwargs):
+@receiver(post_save, sender=CustomUser)
+def update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-@receiver(post_save,sender=CustomUser)
-def save_user_profile(sender,instance,**kwargs):
-    instance.profile.save()
+        instance.profile.save()

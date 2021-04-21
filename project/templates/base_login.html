@@ -26,7 +26,17 @@
 
 <div id="login-container" class="login-container-background">
     <img id="logo" src="{% static 'qlma-logo.png' %}" width="150">
-    <div id="form-area" class="login-shadow"> 
+    <div id="form-area" class="login-shadow">
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                {% endif %}
+                {% if message.tags == 'success' %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
         {% block content %}{% endblock %}
     </div>
     <div id="school-text">
