@@ -30,3 +30,8 @@ docker exec -it web_container python manage.py createsuperuser
 ``` bash
 docker exec -it web_container python manage.py loaddata testdata_en
 ```
+
+## export env vars
+``` bash
+source .env
+```
