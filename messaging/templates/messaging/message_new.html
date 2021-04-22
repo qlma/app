@@ -13,10 +13,15 @@
                     {% csrf_token %}
 
                     Recipient(s):
-                    <input class="form-control" type="text" id="suggestiveSearch" autofocus />
+                    <div class="input-group rounded">
+                        <input class="form-control rounded" type="search" id="suggestiveSearch" placeholder="Search" aria-label="Search"
+                        aria-describedby="search-addon" autofocus />
+                        <span class="input-group-text border-0">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </div>
                     <div id="recipients_list"></div>
                     {{ messageForm.recipients|as_crispy_field }}
-
                     {{ messageForm.title|as_crispy_field }}
                     {{ messageForm.content|as_crispy_field }}
 
