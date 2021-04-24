@@ -4,9 +4,23 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db import models
 from PIL import Image
-
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.validators import UnicodeUsernameValidator
 
 class CustomUser(AbstractUser):
+
+    username_validator = UnicodeUsernameValidator()
+
+    username = models.CharField(
+        _('username'),
+        max_length=20,
+        unique=True,
+        help_text=_('Required. 20 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+        validators=[username_validator],
+        error_messages={
+            'unique': _("A user with that username already exists."),
+        },
+    )
 
     USER_TYPES = (
         ('1', 'Student'),
