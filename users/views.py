@@ -4,11 +4,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
-from users.models import CustomUser
+from users.models import CustomUser, Profile
 from django.contrib.auth.models import Group
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, GroupForm
 from project.decorators import unacthenticated_user, allowed_user_types
+from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.contrib.sites.shortcuts import get_current_site
@@ -22,6 +23,9 @@ from django.views.generic import (
     View,
     ListView,
     DetailView,
+    UpdateView,
+    CreateView,
+    DeleteView
 )
 
 class RegisterView(View):
@@ -87,108 +91,90 @@ class GroupsView(ListView):
             messages.error(request, "Feature is not available. User is not assigned to a group.")
             return HttpResponseRedirect(reverse("news"))
 
-@login_required
-def profile(request):
-    if request.method == 'POST':
+class ProfileView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+        context = {
+            'u_form': u_form,
+            'p_form': p_form
+        }
+        return render(request, 'users/profile.html', context)
+
+    def post(self, request):
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
-                                   request.FILES,
-                                   instance=request.user.profile)
+                                request.FILES,
+                                instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated!')
             return redirect('profile')
 
-    else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
+class UserDetailView(DetailView):
+    def get(self, request, username, *args, **kwargs):
+        user = get_object_or_404(CustomUser, username=username)
+        context = {
+            'user': user
+        }
+        return render(request, 'users/user.html', context)
 
-    context = {
-        'u_form': u_form,
-        'p_form': p_form
-    }
+class UsersManageView(LoginRequiredMixin, ListView):
+    @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
+    def get(self, request, *args, **kwargs):
+        users=CustomUser.objects.all()
+        return render(request,"admin/manage_users.html", { "users": users })
 
-    return render(request, 'users/profile.html', context)
+class UserCreateView(LoginRequiredMixin, CreateView):
+    @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
+    def get(self, request, *args, **kwargs):
+        return render(request,"admin/add_user.html")
 
-def user(request, username):
-    user = get_object_or_404(CustomUser, username=username)
-    context = {
-        'user': user
-    }
-    return render(request, 'users/user.html', context)
-
-@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
-def manage_users(request):
-    users=CustomUser.objects.all()
-    return render(request,"admin/manage_users.html", { "users": users })
-
-@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
-def add_user(request):
-    return render(request,"admin/add_user.html")
-
-@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
-def add_user_save(request):
-    if request.method!="POST":
-        return HttpResponse("Method Not Allowed")
-    else:
-        username=request.POST.get("username")
-        password=request.POST.get("password")
-        first_name=request.POST.get("first_name")
-        last_name=request.POST.get("last_name")
-        email=request.POST.get("email")
-        address=request.POST.get("address")
-
+    @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
+    def post(self, request, *args, **kwargs):
         try:
             user=CustomUser.objects.create_user(
-                username=username,
-                password=password,
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-                address=address)
+                username=request.POST.get("username"),
+                password=request.POST.get("password"),
+                first_name=request.POST.get("first_name"),
+                last_name=request.POST.get("last_name"),
+                email=request.POST.get("email"))
             user.save()
-            messages.success(request,"Successfully Added User")
+            messages.success(request, "Successfully Added User")
             return HttpResponseRedirect(reverse("add_user"))
         except:
             messages.error(request,"Failed to Add User")
             return HttpResponseRedirect(reverse("add_user"))
 
-@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
-def edit_user(request, user_id):
-    user=CustomUser.objects.get(id=user_id)
-    groups = Group.objects.all()
-    return render(request,"admin/edit_user.html",{ "user":user, "user_id":user_id, "groups": groups })
+class UserEditView(LoginRequiredMixin, UpdateView):
+    @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
+    def get(self, request, user_id, *args, **kwargs):
+        user=CustomUser.objects.get(id=user_id)
+        profile=Profile.objects.get(user=user)
+        groups = Group.objects.all()
+        return render(request,"admin/edit_user.html",{ "user":user, "profile":profile , "user_id":user_id, "groups": groups })
 
-@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
-def edit_user_save(request):
-    if request.method!="POST":
-        return HttpResponse("<h2>Method Not Allowed</h2>")
-    else:
-
-        user_id=request.POST.get("user_id")
-        first_name=request.POST.get("first_name")
-        last_name=request.POST.get("last_name")
-        email=request.POST.get("email")
-        username=request.POST.get("username")
-        address=request.POST.get("address")
-        group_id = request.POST.get('group_id')
-
-        try:    
-        
+    @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
+    def post(self, request, user_id, *args, **kwargs):
+        try:
             user=CustomUser.objects.get(id=user_id)
-            user.first_name=first_name
-            user.last_name=last_name
-            user.email=email
-            user.username=username
-            user.address=address
+            user.first_name=request.POST.get("first_name")
+            user.last_name=request.POST.get("last_name")
+            user.email=request.POST.get("email")
+            user.username=request.POST.get("username")
 
             user.groups.clear()
+            group_id = request.POST.get('group_id')
             if group_id != "":    
                 g = Group.objects.get(id=group_id)
                 g.user_set.add(user)
-
             user.save()
+
+            profile=Profile.objects.get(user=user)
+            profile.address=request.POST.get("address")
+            profile.save()
 
             messages.success(request,"Successfully Edited User")
             return HttpResponseRedirect(reverse("edit_user", kwargs={"user_id":user_id}))
@@ -196,17 +182,20 @@ def edit_user_save(request):
             messages.error(request,"Failed to Edit User")
             return HttpResponseRedirect(reverse("edit_user", kwargs={"user_id":user_id}))
 
-@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
-def manage_groups(request):
-    users_without_group=CustomUser.objects.filter(groups__isnull=True)
-    groups=Group.objects.all()
-    return render(request,"admin/manage_groups.html", { "users_without_group": users_without_group, "groups": groups })
+class GroupListView(LoginRequiredMixin, ListView):
+    @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
+    def get(self, request, *args, **kwargs):
+        users_without_group=CustomUser.objects.filter(groups__isnull=True)
+        groups=Group.objects.all()
+        return render(request,"admin/manage_groups.html", { "users_without_group": users_without_group, "groups": groups })
 
-@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
-def add_group(request):
-    if request.method == 'GET':
+class GroupCreateView(LoginRequiredMixin, CreateView):
+    @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
+    def get(self, request, *args, **kwargs):
         return render(request,"admin/add_group.html")
-    if request.method == 'POST':
+
+    @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
+    def post(self, request, *args, **kwargs):
         groupForm = GroupForm(request.POST)
         if groupForm.is_valid():
             group = Group()
@@ -219,16 +208,18 @@ def add_group(request):
             messages.error(request,"Failed to add Group")
             return HttpResponseRedirect(reverse("add_group"))
 
-@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
-def edit_group(request, group_id):
-    group = get_object_or_404(Group, id=group_id)
-    users = CustomUser.objects.filter(groups__name=group.name)
-    return render(request,"admin/edit_group.html", { "group": group, "users": users })
+class GroupEditView(LoginRequiredMixin, UpdateView):
+    @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
+    def get(self, request, group_id, *args, **kwargs):
+        group = get_object_or_404(Group, id=group_id)
+        users = CustomUser.objects.filter(groups__name=group.name)
+        return render(request,"admin/edit_group.html", { "group": group, "users": users })
 
-@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
-def delete_group(request, group_id):
-    group = get_object_or_404(Group, id=group_id)
-    group.delete()
-    messages.success(request,"Successfully deleted group")
-    return HttpResponseRedirect(reverse("manage_groups"))
+class GroupDeleteView(LoginRequiredMixin, DeleteView):
+    @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
+    def get(self, request, group_id, *args, **kwargs):
+        group = get_object_or_404(Group, id=group_id)
+        group.delete()
+        messages.success(request,"Successfully deleted group")
+        return HttpResponseRedirect(reverse("manage_groups"))
 
