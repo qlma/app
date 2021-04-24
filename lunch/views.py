@@ -14,7 +14,6 @@ from .forms import LunchForm
 from project.decorators import unacthenticated_user, allowed_user_types
 
 @login_required
-@allowed_user_types(allowed_roles=['Teacher', 'Admin'])
 def index(request):
     username = request.user
     user=CustomUser.objects.get(username=username)

@@ -2,22 +2,26 @@
 {% block content %}
     <h1>{{ title }}</h1>
 
-    <table width="100%" class="lunches">
-        <tr>
-            <th>Date</th>
-            <th>Title</th>
-            <th>Created at</th>
-            <th>Updated at</th>
-        </tr>
-        {% for lunch in lunches %}
-        <tr>
-            <td>{{ lunch.date|date:"Y-m-d" }}</td>
-            <td><a href="{% url 'lunch:detail' lunch.id %}">{{ lunch.title }}</a></td>
-            <td>{{ lunch.created_at|date:"Y-m-d H:i" }}</td>
-            <td>{{ lunch.updated_at|date:"Y-m-d H:i" }}</td>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    {% if lunches %}
+        <table width="100%" class="lunches">
+            <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+            </tr>
+            {% for lunch in lunches %}
+            <tr>
+                <td>{{ lunch.date|date:"Y-m-d" }}</td>
+                <td><a href="{% url 'lunch:detail' lunch.id %}">{{ lunch.title }}</a></td>
+                <td>{{ lunch.created_at|date:"Y-m-d H:i" }}</td>
+                <td>{{ lunch.updated_at|date:"Y-m-d H:i" }}</td>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No lunches</p>
+    {% endif %}
 
 {% endblock content %}

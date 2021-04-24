@@ -1,9 +1,10 @@
 import json
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Q
+from django.contrib.auth.models import Group
 from django.contrib import messages
-from django.http import HttpResponse
-from django.urls import reverse_lazy
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
@@ -22,15 +23,17 @@ class MessageListView(LoginRequiredMixin, ListView):
     ordering = ['-date_posted']
     paginate_by = 5
 
-    def get_queryset(self):
+    def get(self, request, *args, **kwargs):
+        context = {}
         user = get_object_or_404(CustomUser, username=self.request.user)
-        return Message.objects.filter(recipients=user, is_archived=False).order_by('-date_posted')
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = get_object_or_404(CustomUser, username=self.request.user)
-        context['unread_messages_count'] = Message.objects.filter(recipients=user).filter(is_read=False).count()
-        return context
+        groups = user.groups.all()
+        if(groups):
+            context['messaging'] = Message.objects.filter(recipients=user, is_archived=False).order_by('-date_posted')
+            context['unread_messages_count'] = Message.objects.filter(recipients=user).filter(is_read=False).count()
+            return render(request, self.template_name, context)
+        else:
+            messages.error(request, "Feature is not available. User is not assigned to a group.")
+            return HttpResponseRedirect(reverse("news"))
 
 class MessageSentListView(LoginRequiredMixin, ListView):
     model = Message
@@ -64,7 +67,7 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
     template_name = 'messaging/message_new.html'
 
     def get(self, request, *args, **kwargs):
-        context = { }
+        context = {}
         context['messageForm'] = MessageForm()
 
         user = get_object_or_404(CustomUser, username=self.request.user)
@@ -147,6 +150,7 @@ class MessageArchivedListView(LoginRequiredMixin, ListView):
 def search(request):
     if request.is_ajax():
         query = request.GET.get("term", "")
+        # Search for a users with search term
         try:
             users = CustomUser.objects.filter(
                         Q(username__istartswith=query) |
@@ -159,9 +163,10 @@ def search(request):
 
 def get_recipient_list(users):
     result = []
+
+    # Add users to result list
     for user in users:
         option = { 'id': user.id, 'label': user.first_name + ' ' +  user.last_name + ' (' + user.username + ')' }
         result.append(option)
-    return json.dumps(result)
 
-        
+    return json.dumps(result)

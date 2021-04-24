@@ -70,10 +70,22 @@ class ActivateAccount(View):
             user.save()
             login(request, user)
             messages.success(request, ('Your account have been confirmed.'))
+            messages.error(request,"User is not assigned to a group. Some features are not available.")
             return redirect('news')
         else:
             messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
             return redirect('login')
+
+class GroupsView(ListView):
+    def get(self, request):
+        user = get_object_or_404(CustomUser, username=self.request.user)
+        groups = user.groups.all()
+        if(groups):
+            all_groups=Group.objects.all()
+            return render(request,"groups/groups.html", { "groups": all_groups })
+        else:
+            messages.error(request, "Feature is not available. User is not assigned to a group.")
+            return HttpResponseRedirect(reverse("news"))
 
 @login_required
 def profile(request):
@@ -220,6 +232,3 @@ def delete_group(request, group_id):
     messages.success(request,"Successfully deleted group")
     return HttpResponseRedirect(reverse("manage_groups"))
 
-def groups(request):
-    groups=Group.objects.all()
-    return render(request,"groups/groups.html", { "groups": groups })

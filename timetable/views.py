@@ -4,32 +4,42 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from project.decorators import unacthenticated_user, allowed_user_types
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from django.views import generic
 from users.models import CustomUser
 from .models import Course, Subject, Lesson
 
-@login_required
-def timetable(request):
-    username = request.user
-    user=CustomUser.objects.get(username=username)
-    groups = user.groups.all()
-    for group in groups:
-        current_group = group # TODO: Get this from user session when multiple exists
+from django.views.generic import (
+    View
+)
 
-    weekdays = [0,1,2,3,4]
-    hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00']
-    lessons = Lesson.objects.filter(group_id=group.id)
 
-    return render(request, 'timetable.html',
-        {
-            'title': 'Timetable',
-            'current_group': current_group,
-            'hours': hours,
-            'weekdays': weekdays,
-            'lessons': lessons
-        })
+class TimetableView(LoginRequiredMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        user = get_object_or_404(CustomUser, username=request.user)
+        groups = user.groups.all()
+        if(groups):
+            for group in groups:
+                current_group = group # TODO: Get this from user session when multiple exists
+
+            weekdays = [0,1,2,3,4]
+            hours = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00']
+            lessons = Lesson.objects.filter(group_id=group.id)
+
+            return render(request, 'timetable.html',
+                {
+                    'title': 'Timetable',
+                    'current_group': current_group,
+                    'hours': hours,
+                    'weekdays': weekdays,
+                    'lessons': lessons
+                })
+        else:
+            messages.error(request, "Feature is not available. User is not assigned to a group.")
+            return HttpResponseRedirect(reverse("news"))
 
 def add_course(request):
     subjects=Subject.objects.all()

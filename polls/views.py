@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
+from users.models import CustomUser
 
 from .forms import PollForm
 from .models import Choice, Question
@@ -14,9 +15,16 @@ class IndexView(generic.ListView):
     template_name = 'index.html'
     context_object_name = 'latest_question_list'
 
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+    def get(self, request, *args, **kwargs):
+        user = get_object_or_404(CustomUser, username=self.request.user)
+        groups = user.groups.all()
+        if(groups):
+            context = {}
+            context['questions'] = Question.objects.order_by('-pub_date')[:5]
+            return render(request, self.template_name, context)
+        else:
+            messages.error(request, "Feature is not available. User is not assigned to a group.")
+            return HttpResponseRedirect(reverse("news"))
 
 class DetailView(generic.DetailView):
     model = Question

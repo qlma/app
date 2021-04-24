@@ -7,10 +7,14 @@ from users import views as user_views
 
 from . import views
 
+from .views import (
+    TimetableView,
+)
+
 app_name = 'timetable'
 
 urlpatterns = [
-    path('timetable/', views.timetable, name='timetable'),
+    path('timetable/', views.TimetableView.as_view(), name='timetable'),
 
     path('manage_courses', views.manage_courses, name="manage_courses"),
     path('add_course', views.add_course, name="add_course"),
