@@ -12,15 +12,14 @@ from .models import Choice, Question
 from project.decorators import unacthenticated_user, allowed_user_types
 
 class IndexView(generic.ListView):
-    template_name = 'index.html'
-    context_object_name = 'latest_question_list'
+    template_name = 'polls.html'
 
     def get(self, request, *args, **kwargs):
         user = get_object_or_404(CustomUser, username=self.request.user)
         groups = user.groups.all()
         if(groups):
             context = {}
-            context['questions'] = Question.objects.order_by('-pub_date')[:5]
+            context['latest_polls'] = Question.objects.order_by('-pub_date')[:5]
             return render(request, self.template_name, context)
         else:
             messages.error(request, "Feature is not available. User is not assigned to a group.")
