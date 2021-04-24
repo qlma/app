@@ -153,6 +153,7 @@ def search(request):
         # Search for a users with search term
         try:
             users = CustomUser.objects.filter(
+                        ~Q(username=request.user.username) &
                         Q(username__istartswith=query) |
                         Q(first_name__istartswith=query) |
                         Q(last_name__istartswith=query)
