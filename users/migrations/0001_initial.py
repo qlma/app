@@ -51,6 +51,7 @@ class Migration(migrations.Migration):
                 ('image', models.ImageField(default='default.jpg', upload_to='profile_pics')),
                 ('address', models.CharField(blank=True, max_length=150, help_text='Users home address.', verbose_name='address')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('email_confirmed', models.BooleanField(default=False))
             ],
         ),
     ]
