@@ -23,6 +23,7 @@
                       <th>Last Name</th>
                       <th>User Name</th>
                       <th>Group</th>
+                      <th>User type</th>
                       <th>Is staff</th>
                       <th>Is active</th>
                       <th>Action</th>
@@ -40,6 +41,23 @@
                         {{ group.name }}
                         {% if not forloop.last %}, {% endif %}
                       {% endfor %}
+                      </td>
+                      <td>
+                        {% if user.user_type == '0' %}
+                          {{ types.0.1 }} ({{ user.user_type }})
+                        {% endif %}
+                        {% if user.user_type == '1' %}
+                          {{ types.1.1 }} ({{ user.user_type }})
+                        {% endif %}
+                        {% if user.user_type == '2' %}
+                          {{ types.2.1 }} ({{ user.user_type }})
+                        {% endif %}
+                        {% if user.user_type == '3' %}
+                          {{ types.3.1 }} ({{ user.user_type }})
+                        {% endif %}
+                        {% if user.user_type == '4' %}
+                          {{ types.4.1 }} ({{ user.user_type }})
+                        {% endif %}
                       </td>
                       <td>{{ user.is_staff }}</td>
                       <td>{{ user.is_active }}</td>

@@ -157,3 +157,11 @@ FACILITY_NAME = os.environ.get('FACILITY_NAME')
 FACILITY_ADDRESS = os.environ.get('FACILITY_ADDRESS')
 FACILITY_EMAIL = os.environ.get('FACILITY_EMAIL')
 FACILITY_PHONE = os.environ.get('FACILITY_PHONE')
+
+USER_TYPES = (
+    ('0', 'None'),
+    ('1', 'Student'),
+    ('2', 'Teacher'),
+    ('3', 'Parent'),
+    ('4', 'Cook')
+)

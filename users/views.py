@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.urls import reverse
+from django.conf import settings
 from django.contrib import messages
 from users.models import CustomUser, Profile
 from django.contrib.auth.models import Group
@@ -154,7 +155,8 @@ class UsersManageView(LoginRequiredMixin, ListView):
     @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
     def get(self, request, *args, **kwargs):
         users=CustomUser.objects.all()
-        return render(request,"admin/manage_users.html", { "users": users })
+        types = settings.USER_TYPES
+        return render(request,"admin/manage_users.html", { "users": users, "types": types })
 
 class UserCreateView(LoginRequiredMixin, CreateView):
     @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
@@ -180,10 +182,12 @@ class UserCreateView(LoginRequiredMixin, CreateView):
 class UserEditView(LoginRequiredMixin, UpdateView):
     @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
     def get(self, request, user_id, *args, **kwargs):
-        user=CustomUser.objects.get(id=user_id)
-        profile=Profile.objects.get(user=user)
+        user = CustomUser.objects.get(id=user_id)
+        types = settings.USER_TYPES
+        user_type_selected = user.user_type
+        profile = Profile.objects.get(user=user)
         groups = Group.objects.all()
-        return render(request,"admin/edit_user.html",{ "user":user, "profile":profile , "user_id":user_id, "groups": groups })
+        return render(request,"admin/edit_user.html",{ "user":user, "types":types, "user_type_selected":user_type_selected, "profile":profile , "user_id":user_id, "groups": groups })
 
     @method_decorator(allowed_user_types(allowed_roles=['Teacher', 'Admin']))
     def post(self, request, user_id, *args, **kwargs):
@@ -200,6 +204,7 @@ class UserEditView(LoginRequiredMixin, UpdateView):
                 g = Group.objects.get(id=group_id)
                 g.user_set.add(user)
 
+            user.user_type=request.POST.get("user_type_id")
             user.is_staff=request.POST.get("is_staff", "") == 'on'
             user.is_active=request.POST.get("is_active", "") == 'on'
             user.save()

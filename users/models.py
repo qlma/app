@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db import models
+from django.conf import settings
 from PIL import Image
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.validators import UnicodeUsernameValidator
@@ -22,12 +23,7 @@ class CustomUser(AbstractUser):
         },
     )
 
-    USER_TYPES = (
-        ('1', 'Student'),
-        ('2', 'Teacher'),
-        ('3', 'Parent'),
-        ('4', 'Admin')
-    )
+    USER_TYPES = settings.USER_TYPES
     user_type = models.CharField(choices=USER_TYPES, default=1, max_length=1)
 
     REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
