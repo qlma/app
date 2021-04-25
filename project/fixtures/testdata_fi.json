@@ -1,15 +1,15 @@
 [
    {
       "model":"auth.user",
-      "pk":1,
+      "pk":2,
       "fields":{
          "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
          "last_login":"2020-05-28T18:34:13Z",
          "is_superuser":true,
-         "username":"tester1",
+         "username":"teacher1",
          "first_name":"Anneli",
          "last_name":"Administrator",
-         "email":"tester1@example.com",
+         "email":"teacher1@qlma.fi",
          "is_staff":true,
          "is_active":true,
          "date_joined":"2020-05-26T21:35:29Z",
@@ -18,20 +18,21 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 2
       }
    },
    {
       "model":"auth.user",
-      "pk":2,
+      "pk":3,
       "fields":{
          "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
          "last_login":null,
          "is_superuser":false,
-         "username":"tester2",
+         "username":"teacher2",
          "first_name":"Tero",
          "last_name":"Testaaja",
-         "email":"tester2@example.com",
+         "email":"teacher2@qlma.fi",
          "is_staff":false,
          "is_active":true,
          "date_joined":"2020-05-26T21:35:29.320Z",
@@ -40,29 +41,8 @@
          ],
          "user_permissions":[
 
-         ]
-      }
-   },
-   {
-      "model":"auth.user",
-      "pk":3,
-      "fields":{
-         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
-         "last_login":"2020-05-28T13:04:39.064Z",
-         "is_superuser":false,
-         "username":"tester3",
-         "first_name":"Teppo",
-         "last_name":"Testaaja",
-         "email":"tester3@example.com",
-         "is_staff":false,
-         "is_active":true,
-         "date_joined":"2020-05-27T08:43:44Z",
-         "groups":[
-
          ],
-         "user_permissions":[
-
-         ]
+         "user_type": 2
       }
    },
    {
@@ -72,19 +52,20 @@
          "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
          "last_login":"2020-05-28T13:04:39.064Z",
          "is_superuser":false,
-         "username":"tester4",
-         "first_name":"Kalle",
-         "last_name":"Kaskinen",
-         "email":"tester4@example.com",
+         "username":"student1",
+         "first_name":"Teppo",
+         "last_name":"Testaaja",
+         "email":"student1@qlma.fi",
          "is_staff":false,
          "is_active":true,
          "date_joined":"2020-05-27T08:43:44Z",
          "groups":[
-
+            2
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 1
       }
    },
    {
@@ -94,19 +75,20 @@
          "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
          "last_login":"2020-05-28T13:04:39.064Z",
          "is_superuser":false,
-         "username":"tester5",
-         "first_name":"Matti",
-         "last_name":"Meikäläinen",
-         "email":"tester5@example.com",
+         "username":"student2",
+         "first_name":"Kalle",
+         "last_name":"Kaskinen",
+         "email":"student2@qlma.fi",
          "is_staff":false,
          "is_active":true,
          "date_joined":"2020-05-27T08:43:44Z",
          "groups":[
-
+            2
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 1
       }
    },
    {
@@ -116,19 +98,20 @@
          "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
          "last_login":"2020-05-28T13:04:39.064Z",
          "is_superuser":false,
-         "username":"tester6",
-         "first_name":"Antti",
-         "last_name":"Antikainen",
-         "email":"tester6@example.com",
+         "username":"student3",
+         "first_name":"Matti",
+         "last_name":"Meikäläinen",
+         "email":"student3@qlma.fi",
          "is_staff":false,
          "is_active":true,
          "date_joined":"2020-05-27T08:43:44Z",
          "groups":[
-
+            2
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 1
       }
    },
    {
@@ -138,19 +121,20 @@
          "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
          "last_login":"2020-05-28T13:04:39.064Z",
          "is_superuser":false,
-         "username":"tester7",
-         "first_name":"Helmi",
-         "last_name":"Helminen",
-         "email":"tester7@example.com",
+         "username":"parent1",
+         "first_name":"Antti",
+         "last_name":"Antikainen",
+         "email":"parent1@qlma.fi",
          "is_staff":false,
          "is_active":true,
          "date_joined":"2020-05-27T08:43:44Z",
          "groups":[
-
+            3
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 3
       }
    },
    {
@@ -160,19 +144,20 @@
          "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
          "last_login":"2020-05-28T13:04:39.064Z",
          "is_superuser":false,
-         "username":"tester8",
-         "first_name":"Seppo",
-         "last_name":"Sepponen",
-         "email":"tester8@example.com",
+         "username":"cook1",
+         "first_name":"Helmi",
+         "last_name":"Helminen",
+         "email":"cook1@qlma.fi",
          "is_staff":false,
          "is_active":true,
          "date_joined":"2020-05-27T08:43:44Z",
          "groups":[
-
+            3
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 4
       }
    },
    {
@@ -182,10 +167,33 @@
          "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
          "last_login":"2020-05-28T13:04:39.064Z",
          "is_superuser":false,
-         "username":"tester9",
+         "username":"cook2",
+         "first_name":"Seppo",
+         "last_name":"Sepponen",
+         "email":"cook2@qlma.fi",
+         "is_staff":false,
+         "is_active":true,
+         "date_joined":"2020-05-27T08:43:44Z",
+         "groups":[
+            3
+         ],
+         "user_permissions":[
+
+         ],
+         "user_type": 4
+      }
+   },
+   {
+      "model":"auth.user",
+      "pk":10,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$wGWH2ypuMGs3$9fNYRvHrDAq2tylqr2s+krj+9sSA7wIl6+B+ywmc8ek=",
+         "last_login":"2020-05-28T13:04:39.064Z",
+         "is_superuser":false,
+         "username":"student4",
          "first_name":"Teppo",
          "last_name":"Teppola",
-         "email":"tester9@example.com",
+         "email":"student4@qlma.fi",
          "is_staff":false,
          "is_active":true,
          "date_joined":"2020-05-27T08:43:44Z",
@@ -194,7 +202,8 @@
          ],
          "user_permissions":[
 
-         ]
+         ],
+         "user_type": 1
       }
    },
    {
