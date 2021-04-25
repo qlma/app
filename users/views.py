@@ -87,6 +87,35 @@ class ActivateAccount(View):
             messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
             return redirect('login')
 
+class LoginView(LoginView):
+    authentication_form = UserLoginForm
+
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse("news"))
+        else:
+            # Check if user exists
+            try:
+                user_exists = CustomUser.objects.get(username=username)
+            except:
+                user_exists = None
+            if user_exists is not None:
+                if user_exists.is_active:
+                    messages.error(request, ('Login failed. Please check your password.'))
+                    return HttpResponseRedirect(reverse("login"))
+                else:
+                    messages.error(request, ('Account is inactive.'))
+                    return HttpResponseRedirect(reverse("login"))
+            else:
+                messages.error(request, ('Login failed.'))
+                return redirect("login")
+
 
 class GroupsView(ListView):
     def get(self, request):
