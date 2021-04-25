@@ -23,7 +23,7 @@ urlpatterns = [
     path('activate/<uidb64>/<token>/', user_views.ActivateAccount.as_view(), name='activate'),
     path('profile/', user_views.ProfileView.as_view(), name='profile'),
     path('user/<str:username>/', user_views.UserDetailView.as_view(), name='user'),
-    path('login/', user_views.LoginView.as_view(), name='login'),
+    path('login/', user_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
