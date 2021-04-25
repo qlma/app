@@ -14,5 +14,11 @@ Initial MVP release
 - New message content field has a wysiwyg editor now. 
 - Storing messaging-navi state and highlighting selected item
 - Registered user is now sent a confirmation email with a token. Link in the email points to confirmation URL. User is activated and logged in after confirmation. Requires env vars SMTP_EMAIL_USER & SMTP_EMAIL_PASS.
+- Staff can deactivate users with is_active
+- Staff can flag users is_staff to provide access to admin pages
+- Staff can change user_type and give wider access
+- New user is notified about account inactivity
+- New users are stricted from private information before admin assigns them a group
+- Username is limited to 20 characters
 
 
