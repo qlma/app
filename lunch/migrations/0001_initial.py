@@ -18,11 +18,11 @@ class Migration(migrations.Migration):
             name='Lunch',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('title', models.TextField()),
                 ('date', models.DateField(max_length=255)),
                 ('description', models.TextField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now_add=True)),
-                ('staff_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]
