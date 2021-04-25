@@ -4,9 +4,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from users import views as user_views
-
 from . import views
 from .views import redirect_login
+from users.forms import UserLoginForm
 
 admin.site.site_header = "Qlma Admin Portal"
 admin.site.site_title = "Qlma Admin Portal"
@@ -23,7 +23,7 @@ urlpatterns = [
     path('activate/<uidb64>/<token>/', user_views.ActivateAccount.as_view(), name='activate'),
     path('profile/', user_views.ProfileView.as_view(), name='profile'),
     path('user/<str:username>/', user_views.UserDetailView.as_view(), name='user'),
-    path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    path('login/', user_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(

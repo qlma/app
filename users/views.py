@@ -2,6 +2,7 @@ import os
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.template import RequestContext
 from django.urls import reverse
 from django.contrib import messages
 from users.models import CustomUser, Profile
@@ -10,6 +11,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, GroupForm
 from project.decorators import unacthenticated_user, allowed_user_types
 from django.utils.decorators import method_decorator
+
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.views import LoginView
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.contrib.sites.shortcuts import get_current_site
@@ -27,6 +32,8 @@ from django.views.generic import (
     CreateView,
     DeleteView
 )
+
+from users.forms import UserLoginForm
 
 class RegisterView(View):
     form_class = UserRegisterForm
@@ -58,7 +65,6 @@ class RegisterView(View):
 
         return render(request, self.template_name, {'form': form})
 
-
 class ActivateAccount(View):
 
     def get(self, request, uidb64, token, *args, **kwargs):
@@ -79,6 +85,29 @@ class ActivateAccount(View):
         else:
             messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
             return redirect('login')
+
+class LoginView(LoginView):
+    template_name = 'users/login.html'
+    authentication_form = UserLoginForm
+
+    def post(self, request):
+        username = request.POST.get('username')
+        try:
+            user = CustomUser.objects.get(username=username)
+        except:
+            user = None
+
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse("news"))
+            else:
+                messages.error(request, ('Account is inactive.'))
+                return HttpResponseRedirect(reverse("login"))
+        else:
+            messages.error(request, ('Please check your username.'))
+            return redirect("login")
+
 
 class GroupsView(ListView):
     def get(self, request):
@@ -166,10 +195,13 @@ class UserEditView(LoginRequiredMixin, UpdateView):
             user.username=request.POST.get("username")
 
             user.groups.clear()
-            group_id = request.POST.get('group_id')
+            group_id = request.POST.get("group_id")
             if group_id != "":    
                 g = Group.objects.get(id=group_id)
                 g.user_set.add(user)
+
+            user.is_staff=request.POST.get("is_staff", "") == 'on'
+            user.is_active=request.POST.get("is_active", "") == 'on'
             user.save()
 
             profile=Profile.objects.get(user=user)

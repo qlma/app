@@ -1,5 +1,6 @@
 from django import forms
 from users.models import CustomUser
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
 from .models import Profile
@@ -37,3 +38,7 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ['name']
+
+class UserLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(UserLoginForm, self).__init__(*args, **kwargs)
