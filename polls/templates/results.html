@@ -3,12 +3,15 @@
 
     <h1>{{ question.question_text }}</h1>
 
-    <ul>
     {% for choice in question.choice_set.all %}
-        <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-    {% endfor %}
-    </ul>
+        <h3>Choice: {{ choice.choice_text }} {{ choice.id }}</h3>
 
-    <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+        Votes: <br />
+        {% for vote in votes %}
+            {% if vote.choice.id == choice.id %}
+                <a href="{% url 'user' vote.voter %}">{{ vote.voter }}</a><br />
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
 
 {% endblock content %}

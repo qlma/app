@@ -7,7 +7,7 @@ from django.views import generic
 from users.models import CustomUser
 
 from .forms import PollForm
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 
 from project.decorators import unacthenticated_user, allowed_user_types
 
@@ -25,31 +25,52 @@ class IndexView(generic.ListView):
             messages.error(request, "Feature is not available. User is not assigned to a group.")
             return HttpResponseRedirect(reverse("news"))
 
-class DetailView(generic.DetailView):
+class VoteView(generic.View):
     model = Question
-    template_name = 'detail.html'
+    template_name = 'vote.html'
+
+    def get(self, request, question_id, *args, **kwargs):
+        question = get_object_or_404(Question, pk=question_id)
+        vote = Vote.objects.filter(question=question_id, voter=request.user)
+        print("vote", vote)
+        if vote:
+            return render(request, 'vote.html', {
+                'question': question,
+                'error_message': 'You have already voted.'
+            })
+        else:
+            return render(request, 'vote.html', {
+                'question': question
+            })
+
+    def post(self, request, question_id, *args, **kwargs):
+        question = get_object_or_404(Question, pk=question_id)
+        try:
+            selected_choice = question.choice_set.get(pk=request.POST['choice'])
+            vote = Vote()
+            vote.question = question
+            vote.choice = selected_choice
+            vote.voter = request.user
+            vote.save()
+            return HttpResponseRedirect(reverse('polls:results', args={question.id, }))
+        except (KeyError, Choice.DoesNotExist):
+            return render(request, 'vote.html', {
+                'question': question,
+                'error_message': 'You didn´t choose.'
+            })
 
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'results.html'
 
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'detail.html', {
+    def get(self, request, question_id, *args, **kwargs):
+        question = get_object_or_404(Question, pk=question_id)
+        votes = Vote.objects.filter(question=question_id)
+        return render(request, self.template_name, {
             'question': question,
-            'error_message': "You didn't select a choice.",
+            'votes': votes
         })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
 
 class ManagePollsView(generic.ListView):
     template_name = 'manage_polls.html'

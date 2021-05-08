@@ -614,7 +614,15 @@
       "model":"polls.question",
       "pk":1,
       "fields":{
-         "question_text":"Vote as a member of the board of the parents' association",
+         "question_text":"Vote for a member of the board of the parents' association.",
+         "pub_date":"2020-06-07T09:25:01Z"
+      }
+   },
+   {
+      "model":"polls.question",
+      "pk":2,
+      "fields":{
+         "question_text":"Vote for a date for next parent's association meeting.",
          "pub_date":"2020-06-07T09:25:01Z"
       }
    },
@@ -623,8 +631,7 @@
       "pk":1,
       "fields":{
          "question":1,
-         "choice_text":"Denis Stark",
-         "votes":0
+         "choice_text":"Denis Stark"
       }
    },
    {
@@ -632,8 +639,7 @@
       "pk":2,
       "fields":{
          "question":1,
-         "choice_text":"Phyllis Cramer",
-         "votes":1
+         "choice_text":"Phyllis Cramer"
       }
    },
    {
@@ -641,8 +647,49 @@
       "pk":3,
       "fields":{
          "question":1,
-         "choice_text":"Dan Flanders",
-         "votes":0
+         "choice_text":"Dan Flanders"
+      }
+   },
+   {
+      "model":"polls.choice",
+      "pk":4,
+      "fields":{
+         "question":2,
+         "choice_text":"Monday"
+      }
+   },
+   {
+      "model":"polls.choice",
+      "pk":5,
+      "fields":{
+         "question":2,
+         "choice_text":"Tuesday"
+      }
+   },
+   {
+      "model":"polls.choice",
+      "pk":6,
+      "fields":{
+         "question":2,
+         "choice_text":"Wednesday"
+      }
+   },
+   {
+      "model":"polls.vote",
+      "pk":1,
+      "fields":{
+         "question": 1,
+         "choice": 1,
+         "voter": 2
+      }
+   },
+   {
+      "model":"polls.vote",
+      "pk":2,
+      "fields":{
+         "question": 1,
+         "choice": 2,
+         "voter": 3
       }
    },
    {
