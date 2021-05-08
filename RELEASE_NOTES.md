@@ -20,5 +20,5 @@ Initial MVP release
 - New user is notified about account inactivity
 - New users are stricted from private information before admin assigns them a group
 - Username is limited to 20 characters
-
+- Votes are stored with user id and voting twice is prevented
 
