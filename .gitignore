@@ -132,3 +132,6 @@ dmypy.json
 
 # Collecstatic directory
 /static
+
+# Database backups
+/backup

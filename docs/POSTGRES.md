@@ -12,5 +12,5 @@ docker exec -it postgres_container psql -U postgres -a postgres -c 'SELECT * FRO
 
 ## backup
 ``` bash
-docker exec -it postgres_container pg_dump -U postgres --column-inserts --data-only postgres > qlmadb/backup.sql
+docker exec -it postgres_container pg_dump -U postgres --column-inserts --data-only postgres > backup/backup.sql
 ```
