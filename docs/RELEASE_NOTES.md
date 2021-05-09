@@ -21,4 +21,6 @@ Initial MVP release
 - New users are stricted from private information before admin assigns them a group
 - Username is limited to 20 characters
 - Votes are stored with user id and voting twice is prevented
+- Session storage is now db and timeout set to 15 minutes
+
 
