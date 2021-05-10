@@ -1,3 +1,4 @@
 theme: jekyll-theme-cayman
+baseurl: /docs
 title: Qlma Documentation
 description: Documentation of qlma.fi
