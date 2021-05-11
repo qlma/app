@@ -4,8 +4,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from users import views as user_views
+from project import views as project_views
 from . import views
-from .views import redirect_login
 from users.forms import UserLoginForm
 
 admin.site.site_header = "Qlma Admin Portal"
@@ -18,7 +18,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     
-    path('', redirect_login, name='index'),
+    path('', project_views.RedirectLoginView.as_view(), name='index'),
     path('register/', user_views.RegisterView.as_view(template_name='users/register.html'), name='register'),
     path('activate/<uidb64>/<token>/', user_views.ActivateAccount.as_view(), name='activate'),
     path('profile/', user_views.ProfileView.as_view(), name='profile'),
@@ -46,6 +46,8 @@ urlpatterns = [
          ),
          name='password_reset_complete'),
 
+    path('staff/', project_views.StaffView.as_view(), name='staff'),
+
     path('', include('news.urls')),
     path('', include('messaging.urls')),
     path('', include('cal.urls')),
@@ -53,9 +55,6 @@ urlpatterns = [
     path('', include('timetable.urls')),
     path('polls/', include('polls.urls')),
     path('lunch/', include('lunch.urls')),
-
-    path('staff/', views.staff, name='staff'),
-
 
     path('school/<int:school_id>/', views.school, name='school'),
     path('about/', views.about, name='about'),
