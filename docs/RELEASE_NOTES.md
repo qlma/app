@@ -24,5 +24,5 @@ Initial MVP release
 - Session storage is now db and timeout set to 15 minutes
 - Adding Wysiwyg editor to News update form
 - Limiting users from seeing other users messages
-
+- Allowing only staff to post news 
 
