@@ -22,5 +22,7 @@ Initial MVP release
 - Username is limited to 20 characters
 - Votes are stored with user id and voting twice is prevented
 - Session storage is now db and timeout set to 15 minutes
+- Adding Wysiwyg editor to News update form
+- Limiting users from seeing other users messages
 
 
