@@ -51,7 +51,7 @@ class MessageSentListView(LoginRequiredMixin, ListView):
         context['unread_messages_count'] = Message.objects.filter(recipients=user).filter(is_read=False).count()
         return context
 
-class MessageDetailView(LoginRequiredMixin, DetailView):
+class MessageDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Message
 
     def get_object(self):
@@ -59,6 +59,12 @@ class MessageDetailView(LoginRequiredMixin, DetailView):
         message.is_read = True
         message.save()
         return message
+
+    def test_func(self):
+        message = super().get_object()
+        if self.request.user in message.recipients.all():
+            return True
+        return False
 
 class MessageCreateView(LoginRequiredMixin, CreateView):
 
