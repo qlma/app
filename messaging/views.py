@@ -62,7 +62,7 @@ class MessageDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
     def test_func(self):
         message = super().get_object()
-        if self.request.user in message.recipients.all():
+        if self.request.user in message.recipients.all() or self.request.user == message.sender:
             return True
         return False
 
