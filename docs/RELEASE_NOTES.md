@@ -25,4 +25,5 @@ Initial MVP release
 - Adding Wysiwyg editor to News update form
 - Limiting users from seeing other users messages
 - Allowing only staff to post news 
-
+- Fix bug of highlighting archived messages tile after redirect
+- Adding sorting to archived messages
