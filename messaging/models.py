@@ -12,6 +12,7 @@ class Message(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     is_read = models.BooleanField(default=False)
     is_archived = models.BooleanField(default=False)
+    date_archived = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title

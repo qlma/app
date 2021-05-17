@@ -1,4 +1,5 @@
 import json
+from django.utils import timezone
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Q
 from django.contrib.auth.models import Group
@@ -134,6 +135,7 @@ class MessageArchiveView(LoginRequiredMixin, ListView):
     def post(self, request, pk, *args, **kwargs):
         message = get_object_or_404(Message, pk=pk)
         message.is_archived = True
+        message.date_archived = timezone.now()
         message.save()
         return redirect('messaging:messages-archived')
 
@@ -144,7 +146,7 @@ class MessageArchivedListView(LoginRequiredMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        archived_messages = Message.objects.filter(recipients=self.request.user, is_archived=True).order_by('-date_posted')
+        archived_messages = Message.objects.filter(recipients=self.request.user, is_archived=True).order_by('-date_archived')
         return archived_messages
 
     def get_context_data(self, **kwargs):
